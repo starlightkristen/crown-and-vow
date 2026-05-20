@@ -17,7 +17,7 @@ const TRIP = {
   faireLocation: 'Tuxedo Park, NY',
   rentalArea: 'Greenwood Lake, NY',
   vrboLink: 'https://www.vrbo.com/4249385',
-  venmo: '[VENMO]',
+  venmo: '[TBD]',
   formspreeEndpoint: 'https://formspree.io/f/xykoqdza',
   costBreakdown: [
     { item: 'Lodging share (2 nights)', note: 'TBA' },
