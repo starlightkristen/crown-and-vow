@@ -92,6 +92,7 @@ Error generating stack: `+o.message+`
           outline: none; border-color: var(--gold);
           background: rgba(232, 220, 196, 0.12);
         }
+        select option { background: var(--forest-deep); color: var(--cream); }
         input[type="color"] { height: 50px; padding: 4px; cursor: pointer; }
         textarea { min-height: 70px; resize: vertical; }
         label {
