@@ -18,7 +18,7 @@ const TRIP = {
   rentalArea: 'Greenwood Lake, NY',
   vrboLink: 'https://www.vrbo.com/4249385',
   venmo: '[VENMO]',
-  formspreeEndpoint: 'https://formspree.io/f/YOUR_ENDPOINT_HERE',
+  formspreeEndpoint: 'https://formspree.io/f/xykoqdza',
   costBreakdown: [
     { item: 'Lodging share (2 nights)', note: 'TBA' },
     { item: 'Faire ticket', note: 'TBA' },
