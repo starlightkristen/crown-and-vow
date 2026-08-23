@@ -11,12 +11,12 @@ const TRIP = {
   bride: 'Marlena',
   weddingDate: 'November 14, 2026',
   startDate: 'September 18, 2026',
-  endDate: 'September 20, 2026',
+  endDate: 'September 21, 2026',
   faireDate: 'Saturday, September 19',
   faireName: 'New York Renaissance Faire',
   faireLocation: 'Tuxedo Park, NY',
-  rentalArea: 'Greenwood Lake, NY',
-  vrboLink: 'https://www.vrbo.com/4249385',
+  rentalArea: 'Highland Lakes, NJ',
+  vrboLink: 'https://vrbo.onelink.me/ItNz/3l0lfnlc',
   venmo: '[TBD]',
   formspreeEndpoint: 'https://formspree.io/f/xykoqdza',
   costBreakdown: [
@@ -244,7 +244,7 @@ export default function CrownAndVow() {
             fontSize: '1.3rem', color: 'var(--cream-soft)',
             marginTop: '1rem', opacity: 0.85,
           }}>
-            Marlena's Bachelorette · September 18–20, 2026
+            Marlena's Bachelorette · September 18–21, 2026
           </div>
         </div>
 
@@ -260,7 +260,7 @@ export default function CrownAndVow() {
         <SectionHeader kicker="Chapter the First" title="The Manor" />
         <div className="parchment" style={{ padding: '2.5rem', border: '1px solid var(--gold)' }}>
           <p style={{ margin: 0, fontSize: '1.1rem' }}>
-            <DropCap letter="A" /> house near Greenwood Lake, roughly twenty minutes from the {TRIP.faireName} gates.
+            <DropCap letter="A" /> house near {TRIP.rentalArea}, a short drive from the {TRIP.faireName} gates.
             Four bedrooms, fire pit, woods.
           </p>
           <div style={{ marginTop: '2rem' }}>
