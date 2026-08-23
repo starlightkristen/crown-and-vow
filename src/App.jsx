@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 // CROWN & VOW — Marlena's Bachelorette Hub (v2.1)
 // Section order: Hero → Manor → Questionnaire intro →
 // Necessities → Specifics → Tell Us About You → Stars →
-// Presentation → Coin → Sign & Send
+// Coin → Sign & Send
 // ============================================================
 
 const TRIP = {
@@ -410,86 +410,6 @@ export default function CrownAndVow() {
         <Field label="Your Ideal Night IN" helper="Set the scene. Be specific.">
           <textarea onChange={(e) => update('nightIn', e.target.value)} />
         </Field>
-
-        <Field label="There's a cat in the road. It's making direct eye contact with you. What is happening here?" helper="Pick the one that feels truest.">
-          <div style={{ marginTop: '0.5rem' }}>
-            {[
-              "It has a message and I have to figure out what.",
-              "It is judging me. Fair.",
-              "It's a test. I refuse to be the first to look away.",
-              "It's clearly a god in disguise. I bow slightly.",
-              "I am late for something but this is also important.",
-              "This cat lives here now. I'll explain to my landlord.",
-              "I have already lost. I drive around it.",
-            ].map((opt) => (
-              <button key={opt} type="button"
-                className={`radio-option ${formData.q1 === opt ? 'selected' : ''}`}
-                onClick={() => update('q1', opt)}>
-                {opt}
-              </button>
-            ))}
-          </div>
-        </Field>
-
-        <Field label="Someone you knew in high school messages you out of nowhere. &quot;Hey, weird question.&quot; What do you reply?">
-          <div style={{ marginTop: '0.5rem' }}>
-            {[
-              "\"Yes.\"",
-              "\"How weird are we talking.\"",
-              "\"Hi! What's up :)\" (I will regret this immediately)",
-              "I leave them on read for 3 to 6 business days.",
-              "I screenshot it and send it to my group chat first.",
-              "\"I'm doing fine, thanks for asking, you?\" (deflect, redirect, evade)",
-              "I'm already drafting three different responses. I will send none of them.",
-            ].map((opt) => (
-              <button key={opt} type="button"
-                className={`radio-option ${formData.q2 === opt ? 'selected' : ''}`}
-                onClick={() => update('q2', opt)}>
-                {opt}
-              </button>
-            ))}
-          </div>
-        </Field>
-
-        <Field label="You're at dinner. Someone at the table says something so wrong it stops time. What's your move?">
-          <div style={{ marginTop: '0.5rem' }}>
-            {[
-              "Direct correction. Polite. Final.",
-              "I make a face. They will see it. They will know.",
-              "I ask one extremely specific follow-up question and watch them dig.",
-              "I say nothing. I will be unpacking this for weeks.",
-              "I agree with them on purpose to see how far it goes.",
-              "I change the subject so smoothly no one notices what I did.",
-              "I write it down later. This is going in the bit.",
-            ].map((opt) => (
-              <button key={opt} type="button"
-                className={`radio-option ${formData.q3 === opt ? 'selected' : ''}`}
-                onClick={() => update('q3', opt)}>
-                {opt}
-              </button>
-            ))}
-          </div>
-        </Field>
-
-        <Field label="The weekend is over. You're driving home alone. What's in the cup holder?">
-          <div style={{ marginTop: '0.5rem' }}>
-            {[
-              "A perfect coffee. Calculated. Optimized.",
-              "A water bottle that's been there since Saturday.",
-              "Whatever I could grab. There are crumbs.",
-              "A small souvenir from the trip I will keep forever.",
-              "An old napkin with someone's number on it.",
-              "A drink someone else made me. I don't know what's in it. It's delicious.",
-              "Nothing. The cup holder is sacred.",
-            ].map((opt) => (
-              <button key={opt} type="button"
-                className={`radio-option ${formData.q4 === opt ? 'selected' : ''}`}
-                onClick={() => update('q4', opt)}>
-                {opt}
-              </button>
-            ))}
-          </div>
-        </Field>
       </section>
 
       <Divider />
@@ -515,24 +435,9 @@ export default function CrownAndVow() {
 
       <Divider />
 
-      {/* PRESENTATION */}
-      <section style={{ padding: '4rem 1.5rem', maxWidth: '640px', margin: '0 auto' }}>
-        <SectionHeader kicker="Chapter the Sixth" title="The Presentation" />
-        <div style={{ fontSize: '1.15rem', textAlign: 'center' }}>
-          <p style={{ maxWidth: '500px', margin: '0 auto' }}>
-            Somewhere during the weekend, a slideshow night.
-          </p>
-          <p style={{ maxWidth: '500px', margin: '1.5rem auto 0', fontStyle: 'italic', color: 'var(--cream-soft)' }}>
-            The kind where everyone's made something completely unhinged about something they care way too much about. Format, length, topic — entirely open. The only ask: make it something only you would make.
-          </p>
-        </div>
-      </section>
-
-      <Divider />
-
       {/* COIN */}
       <section style={{ padding: '4rem 1.5rem', maxWidth: '760px', margin: '0 auto' }}>
-        <SectionHeader kicker="Chapter the Seventh" title="The Coin" subtitle="Pricing will be updated as soon as everything is locked." />
+        <SectionHeader kicker="Chapter the Sixth" title="The Coin" subtitle="Pricing will be updated as soon as everything is locked." />
         <div style={{ borderTop: '1px solid var(--gold)', borderBottom: '1px solid var(--gold)' }}>
           {TRIP.costBreakdown.map((row, i) => (
             <div key={i} style={{
