@@ -1,0 +1,56 @@
+/* Crown & Vow bachelorette reskin, layered on top of the base MarQrCam chrome.
+   Loaded last on every page so these values win the cascade without touching
+   the underlying camera/darkroom/gallery logic or the vintage camera art,
+   which are event-agnostic and shared with the wedding deployment's design. */
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root{
+  --ink:#e8dcc4;
+  --paper:#1a2820;
+  --paper2:#0f1812;
+  --panel:#22301f;
+  --gold:#c9a04a;
+  --wine:#5c2618;
+  --muted:#a8b39a;
+  --line:#a8843a;
+  --safe:#6b7a5a;
+}
+
+body{
+  font-family:'EB Garamond', Georgia, 'Times New Roman', serif;
+  background:linear-gradient(180deg,#1a2820 0%,#0f1812 100%);
+  color:var(--ink);
+}
+
+.masthead h1,.section-heading h2,.gallery-header h1,.admin-header h1{
+  font-family:'IM Fell English', Georgia, serif;
+}
+.eyebrow{font-family:'IM Fell English SC','Arial',sans-serif;letter-spacing:.3em;}
+
+.panel,.guest-result,.status-strip>div,.latest-photo,.roll-item,
+.lookup-row input,.secondary,
+.gallery-shell .panel,.admin-panel,.admin-photos,.admin-login{
+  background:#22301f;
+  border-color:var(--line);
+  color:var(--ink);
+}
+
+/* Camera cards keep their light product-photo backdrop from camera-themes.css
+   (dark vintage camera art needs a bright card to read well) — just warm the border. */
+.camera-card{border-color:var(--line)}
+
+.lookup-row button,.primary,.roll-num{
+  background:var(--gold);
+  color:#1a2820;
+}
+
+.text-button{color:var(--gold)}
+
+.shutter{border-color:var(--gold);background:#2a3a26}
+.shutter span{background:var(--wine)}
+
+.error{background:#3a1f19;border-color:var(--wine);color:#f0d8cf}
+
+.deck,.section-heading p,.hint,.camera-topline span,.status-strip span,.latest-photo p,.roll-item p{
+  color:var(--muted);
+}
