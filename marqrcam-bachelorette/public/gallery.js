@@ -33,7 +33,7 @@ function openPhoto(photo) {
   closePhoto();
   lightbox = document.createElement('div');
   lightbox.className = 'gallery-lightbox';
-  lightbox.innerHTML = `<div class="gallery-lightbox-bar"><div><span>CROWN & VOW · SEPT 18–21, 2026</span><strong>${escapeHtml(photo.firstName)} · ${formatCamera(photo.cameraModel)}</strong></div><button type="button" aria-label="Close">×</button></div><div class="gallery-lightbox-stage"><img src="${photo.imageUrl}" alt="Bachelorette photo by ${escapeHtml(photo.firstName)}"></div>`;
+  lightbox.innerHTML = `<div class="gallery-lightbox-bar"><div><span>LAST KNIGHT OUT · SEPT 18–21, 2026</span><strong>${escapeHtml(photo.firstName)} · ${formatCamera(photo.cameraModel)}</strong></div><button type="button" aria-label="Close">×</button></div><div class="gallery-lightbox-stage"><img src="${photo.imageUrl}" alt="Bachelorette photo by ${escapeHtml(photo.firstName)}"></div>`;
   document.body.append(lightbox);
   document.body.classList.add('gallery-open');
   lightbox.querySelector('button').addEventListener('click', closePhoto);
@@ -41,5 +41,6 @@ function openPhoto(photo) {
 }
 function closePhoto() { lightbox?.remove(); lightbox = null; document.body.classList.remove('gallery-open'); }
 window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePhoto(); });
-function formatCamera(id) { return String(id || '').replaceAll('-', ' ').replace(/\b\w/g, (c) => c.toUpperCase()); }
+const CAMERA_NAMES = { 'canon-ae1': 'The Minstrel', 'olympus-trip-35': 'The Wanderer', 'polaroid-sx70': 'The Alchemist', 'kodak-instamatic-104': 'The Jester', 'nikon-f3': 'The Archivist', 'pentax-k1000': 'The Courtier' };
+function formatCamera(id) { return CAMERA_NAMES[id] || String(id || '').replaceAll('-', ' ').replace(/\b\w/g, (c) => c.toUpperCase()); }
 function escapeHtml(value) { return String(value || '').replace(/[&<>'"]/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;' }[c])); }

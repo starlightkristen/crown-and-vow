@@ -1,4 +1,4 @@
-/* Crown & Vow bachelorette guest experience layer.
+/* Last Knight Out bachelorette guest experience layer.
    Classic and Illuminated share one DOM and one application state. */
 :root{
   --museum-black:#0d0c0a;
@@ -89,7 +89,7 @@ body[data-current-view="shoot-view"] .masthead{padding-bottom:14px}body[data-cur
 /* Roll / photographic desk */
 #roll-view .roll-heading{padding-bottom:4px}.roll-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.roll-item{background:#15120f;border-color:rgba(195,164,107,.30);color:var(--ivory);border-radius:14px;min-width:0}.roll-item p{color:var(--ivory-soft)}.roll-num{background:#080706;color:var(--brass-bright);border:1px solid rgba(195,164,107,.28)}.badge{color:#cbe8d1}
 
-/* Existing feature overlays inherit the wedding palette. */
+/* Existing feature overlays inherit the theme palette. */
 .capture-review,.review-overlay,.darkroom-overlay,.roll-lightbox{background:rgba(6,5,4,.94)!important;color:var(--ivory)}
 .capture-review button,.review-overlay button,.darkroom-overlay button,.roll-lightbox button{min-height:48px}
 

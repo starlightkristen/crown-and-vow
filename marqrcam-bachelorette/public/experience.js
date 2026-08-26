@@ -143,7 +143,7 @@ function applyMode(mode, announceChange) {
   }
 
   if (announceChange) {
-    announce(`${label} view selected.${next === 'illuminated' ? ' Larger type, stronger contrast and larger controls are on.' : ' Candlelit wedding presentation is on.'}`);
+    announce(`${label} view selected.${next === 'illuminated' ? ' Larger type, stronger contrast and larger controls are on.' : ' Candlelit court presentation is on.'}`);
   }
 }
 

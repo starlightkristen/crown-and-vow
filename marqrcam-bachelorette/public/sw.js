@@ -1,9 +1,9 @@
-const CACHE = 'marqrcam-crown-vow-shell-v1';
+const CACHE = 'marqrcam-last-knight-out-shell-v2';
 const SHELL = [
   '/',
   '/index.html',
   '/styles.css',
-  '/crown-vow-theme.css',
+  '/last-knight-out-theme.css',
   '/camera-themes.css',
   '/camera-mobile.css',
   '/experience.css',
@@ -27,13 +27,19 @@ const SHELL = [
   '/gallery.html',
   '/gallery.css',
   '/gallery.js',
-  '/icons/crown-vow-crest.svg',
+  '/icons/last-knight-out-crest.svg',
   '/icons/canon-ae1.svg',
   '/icons/olympus-trip-35.svg',
   '/icons/polaroid-sx70.svg',
   '/icons/kodak-instamatic-104.svg',
   '/icons/nikon-f3.svg',
   '/icons/pentax-k1000.svg',
+  '/icons/sigils/minstrel.svg',
+  '/icons/sigils/wanderer.svg',
+  '/icons/sigils/alchemist.svg',
+  '/icons/sigils/jester.svg',
+  '/icons/sigils/archivist.svg',
+  '/icons/sigils/courtier.svg',
 ];
 
 self.addEventListener('install', (event) => {

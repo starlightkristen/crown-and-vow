@@ -263,7 +263,7 @@ async function saveEvent() {
 async function exportCsv() {
   const response = await api('/api/admin/export.csv');
   if (!response.ok) return handleUnauthorized(response);
-  const blob = await response.blob(); triggerDownload(blob, 'crown-vow-photo-manifest.csv');
+  const blob = await response.blob(); triggerDownload(blob, 'last-knight-out-photo-manifest.csv');
 }
 async function downloadPhoto(photo, variant) {
   const response = await api(`/api/admin/download/${encodeURIComponent(photo.id)}?variant=${variant}`);
@@ -273,6 +273,7 @@ async function downloadPhoto(photo, variant) {
 function triggerDownload(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
 function api(path, options={}) { const headers = new Headers(options.headers || {}); headers.set('x-admin-token', token); return fetch(path, { ...options, headers, cache:'no-store' }); }
 function handleUnauthorized(response) { if (response.status===401) logout(); }
-function formatCamera(id){return String(id||'').replaceAll('-',' ').replace(/\b\w/g,c=>c.toUpperCase())}
+const CAMERA_NAMES = { 'canon-ae1': 'The Minstrel', 'olympus-trip-35': 'The Wanderer', 'polaroid-sx70': 'The Alchemist', 'kodak-instamatic-104': 'The Jester', 'nikon-f3': 'The Archivist', 'pentax-k1000': 'The Courtier' };
+function formatCamera(id){return CAMERA_NAMES[id] || String(id||'').replaceAll('-',' ').replace(/\b\w/g,c=>c.toUpperCase())}
 function formatTime(value){if(!value)return '—';const date=new Date(value.includes?.('T')?value:value.replace(' ','T')+'Z');return Number.isNaN(date.getTime())?escapeHtml(value):date.toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}
 function escapeHtml(value){return String(value||'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]))}

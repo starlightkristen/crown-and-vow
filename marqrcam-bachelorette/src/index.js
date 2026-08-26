@@ -8,12 +8,12 @@ const FILTERS = new Set(["original", "warm", "soft", "mono", "faded", "night", "
 const FRAMES = new Set(["none", "ivory", "black", "instant", "museum", "museum-mat", "gallery-label", "gilded", "modern-gallery", "illuminated", "renaissance"]);
 
 const CAMERAS = {
-  "canon-ae1": { name: "Canon AE-1", shortName: "AE-1", icon: "/icons/canon-ae1.svg", theme: "#171513" },
-  "olympus-trip-35": { name: "Olympus Trip 35", shortName: "Trip 35", icon: "/icons/olympus-trip-35.svg", theme: "#292623" },
-  "polaroid-sx70": { name: "Polaroid SX-70", shortName: "SX-70", icon: "/icons/polaroid-sx70.svg", theme: "#1b1714" },
-  "kodak-instamatic-104": { name: "Kodak Instamatic 104", shortName: "Instamatic", icon: "/icons/kodak-instamatic-104.svg", theme: "#1d1c1a" },
-  "nikon-f3": { name: "Nikon F3", shortName: "F3", icon: "/icons/nikon-f3.svg", theme: "#11110f" },
-  "pentax-k1000": { name: "Pentax K1000", shortName: "K1000", icon: "/icons/pentax-k1000.svg", theme: "#1b1917" },
+  "canon-ae1": { name: "The Minstrel", shortName: "Minstrel", icon: "/icons/canon-ae1.svg", theme: "#171513" },
+  "olympus-trip-35": { name: "The Wanderer", shortName: "Wanderer", icon: "/icons/olympus-trip-35.svg", theme: "#292623" },
+  "polaroid-sx70": { name: "The Alchemist", shortName: "Alchemist", icon: "/icons/polaroid-sx70.svg", theme: "#1b1714" },
+  "kodak-instamatic-104": { name: "The Jester", shortName: "Jester", icon: "/icons/kodak-instamatic-104.svg", theme: "#1d1c1a" },
+  "nikon-f3": { name: "The Archivist", shortName: "Archivist", icon: "/icons/nikon-f3.svg", theme: "#11110f" },
+  "pentax-k1000": { name: "The Courtier", shortName: "Courtier", icon: "/icons/pentax-k1000.svg", theme: "#1b1917" },
 };
 
 export default {
@@ -144,7 +144,7 @@ async function uploadPhoto(request, url, env) {
   const capturedAt = validIso(url.searchParams.get("capturedAt"));
   const extension = extensionFor(contentType);
   const photoId = crypto.randomUUID();
-  const key = `bachelorette/crown-vow-2026/originals/${session.guest_id}/${session.id}/personal-roll/${String(frame).padStart(4, "0")}-${photoId}.${extension}`;
+  const key = `bachelorette/last-knight-out-2026/originals/${session.guest_id}/${session.id}/personal-roll/${String(frame).padStart(4, "0")}-${photoId}.${extension}`;
 
   let stored;
   try {
@@ -187,7 +187,7 @@ async function saveDevelopedPhoto(request, url, env) {
   const recipe = parseEditRecipe(request.headers.get("x-edit-recipe"));
   if (!recipe) return json({ error: "Invalid darkroom settings." }, 400);
   const extension = extensionFor(contentType);
-  const key = `bachelorette/crown-vow-2026/developed/${session.guest_id}/${photo.originalSessionId}/${photoId}.${extension}`;
+  const key = `bachelorette/last-knight-out-2026/developed/${session.guest_id}/${photo.originalSessionId}/${photoId}.${extension}`;
   const stored = await env.PHOTOS.put(key, request.body, { httpMetadata: { contentType }, customMetadata: { photoId, guestId: session.guest_id, sessionId: photo.originalSessionId, kind: "developed" } });
   if (!stored || stored.size > MAX_DEVELOPED_BYTES) {
     await env.PHOTOS.delete(key);
@@ -342,7 +342,7 @@ async function adminExportCsv(request, env) {
   const headers = ["photo_id","frame","camera","mime_type","size_bytes","captured_at","uploaded_at","edit_status","gallery_status","gallery_permission","first_name","last_name"];
   const rows = (result.results || []).map((r) => [r.id,r.frame,r.camera_model,r.mime_type,r.size_bytes,r.captured_at,r.uploaded_at,r.edit_status,r.gallery_status,r.gallery_permission,r.first_name,r.last_name]);
   const csv = [headers, ...rows].map((row) => row.map(csvCell).join(",")).join("\n") + "\n";
-  return new Response(csv, { headers: { "content-type": "text/csv; charset=utf-8", "content-disposition": `attachment; filename="crown-vow-photo-manifest.csv"`, "cache-control": "no-store" } });
+  return new Response(csv, { headers: { "content-type": "text/csv; charset=utf-8", "content-disposition": `attachment; filename="last-knight-out-photo-manifest.csv"`, "cache-control": "no-store" } });
 }
 
 async function adminDownload(request, url, env) {
@@ -406,14 +406,14 @@ function manifestResponse(url) {
   const camera = CAMERAS[cameraId];
   return new Response(JSON.stringify({
     id: `/?camera=${cameraId}`,
-    name: `Crown & Vow Camera — ${camera.name}`,
+    name: `Last Knight Out Camera — ${camera.name}`,
     short_name: camera.shortName,
     start_url: `/?camera=${cameraId}`,
     scope: "/",
     display: "standalone",
     background_color: "#f2eadc",
     theme_color: camera.theme,
-    description: "A picture, if you please. Crown & Vow · Sept 18–21, 2026",
+    description: "A picture, if you please. Last Knight Out · Sept 18–21, 2026",
     icons: [{ src: camera.icon, sizes: "any", type: "image/svg+xml", purpose: "any maskable" }],
   }), { headers: { "content-type": "application/manifest+json; charset=utf-8", "cache-control": "no-store" } });
 }

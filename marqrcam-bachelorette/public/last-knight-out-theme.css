@@ -1,0 +1,109 @@
+/* LAST KNIGHT OUT — a Ren Faire bachelorette reskin, layered on top of the
+   base MarQrCam chrome. Loaded last on every page so these values win the
+   cascade without touching the underlying camera/darkroom/gallery logic or
+   the vintage camera art, which are event-agnostic and shared with the
+   wedding deployment's design. */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+:root{
+  --ink:#efe3c8;
+  --paper:#0a0908;
+  --paper2:#050504;
+  --panel:#141210;
+  --gold:#d8ae5c;
+  --gold-bright:#f3d488;
+  --wine:#6a2036;
+  --muted:#b3a58e;
+  --line:#8a6a30;
+  --safe:#7a8f6a;
+  --moon-glow:rgba(216,174,92,.22);
+}
+
+body{
+  font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size:1.08em;
+  background:
+    radial-gradient(1.5px 1.5px at 12% 18%, rgba(243,212,136,.9), transparent),
+    radial-gradient(1px 1px at 78% 12%, rgba(243,212,136,.75), transparent),
+    radial-gradient(1.5px 1.5px at 34% 62%, rgba(243,212,136,.7), transparent),
+    radial-gradient(1px 1px at 62% 78%, rgba(243,212,136,.6), transparent),
+    radial-gradient(1.5px 1.5px at 88% 55%, rgba(243,212,136,.8), transparent),
+    radial-gradient(1px 1px at 20% 85%, rgba(243,212,136,.55), transparent),
+    radial-gradient(1.5px 1.5px at 55% 30%, rgba(243,212,136,.5), transparent),
+    radial-gradient(ellipse at 50% -10%, rgba(216,174,92,.14) 0%, transparent 45%),
+    linear-gradient(180deg,#0a0908 0%,#050504 100%);
+  background-attachment:fixed;
+  color:var(--ink);
+}
+
+.masthead h1,.section-heading h2,.gallery-header h1,.admin-header h1,.welcome-title,
+.coachmark-title,.display-card h2{
+  font-family:'Cinzel Decorative', 'Cinzel', Georgia, serif;
+  font-weight:700;
+  letter-spacing:.01em;
+}
+.eyebrow{font-family:'Cinzel','Arial',sans-serif;letter-spacing:.32em;font-weight:600}
+
+.panel,.guest-result,.status-strip>div,.latest-photo,.roll-item,
+.lookup-row input,.secondary,
+.gallery-shell .panel,.admin-panel,.admin-photos,.admin-login{
+  background:var(--panel);
+  border-color:var(--line);
+  color:var(--ink);
+}
+
+/* Camera cards keep their light product-photo backdrop from camera-themes.css
+   (dark vintage camera art needs a bright card to read well) — just warm the border,
+   then give each camera its own jewel-tone accent, echoing the Ren Faire card deck. */
+.camera-card{border-color:var(--line)}
+.camera-card-art{position:relative}
+.camera-sigil{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:34px;
+  height:34px;
+  padding:7px;
+  border-radius:50%;
+  background:radial-gradient(circle,#1c1712,#0d0a08);
+  box-shadow:0 0 0 1px rgba(216,174,92,.55),0 4px 12px rgba(0,0,0,.35);
+}
+.camera-card[data-camera="canon-ae1"]{border-color:#3f7a54}
+.camera-card[data-camera="nikon-f3"]{border-color:#4a4640}
+.camera-card[data-camera="olympus-trip-35"]{border-color:#2c6e82}
+.camera-card[data-camera="polaroid-sx70"]{border-color:#6a3f82}
+.camera-card[data-camera="kodak-instamatic-104"]{border-color:#a1476f}
+.camera-card[data-camera="pentax-k1000"]{border-color:var(--wine)}
+
+.lookup-row button,.primary,.roll-num{
+  background:var(--gold);
+  color:#211705;
+  font-weight:700;
+}
+
+.text-button{color:var(--gold-bright)}
+
+.shutter{border-color:var(--gold);background:radial-gradient(circle at 35% 30%,#2a2620,#171310)}
+.shutter span{background:#100d0a;box-shadow:inset 0 0 0 1px rgba(216,174,92,.35)}
+
+.error{background:#341522;border-color:var(--wine);color:#f6d9e2}
+
+.deck,.section-heading p,.hint,.camera-topline span,.status-strip span,.latest-photo p,.roll-item p{
+  color:var(--muted);
+}
+
+/* Celestial flourishes */
+.welcome-monogram{
+  font-size:34px !important;
+  color:var(--gold-bright) !important;
+  box-shadow:0 0 0 1px rgba(216,174,92,.5), 0 0 34px var(--moon-glow) !important;
+  background:radial-gradient(circle,rgba(216,174,92,.08),transparent 70%);
+}
+
+.begin-experience,.lookup-row button,.primary{
+  box-shadow:0 0 26px rgba(216,174,92,.28);
+}
+
+.tour-spotlight{
+  box-shadow:0 0 0 4px var(--gold-bright),0 0 26px 4px var(--moon-glow),0 0 0 9999px rgba(4,3,2,.6) !important;
+}

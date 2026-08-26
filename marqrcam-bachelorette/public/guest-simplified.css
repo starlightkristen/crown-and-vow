@@ -1,5 +1,5 @@
 /* Simplified one-screen guest camera experience.
-   Keep the wedding atmosphere; keep the mechanics obvious. */
+   Keep the celestial atmosphere; keep the mechanics obvious. */
 
 body[data-current-view="shoot-view"]{
   overflow-x:hidden;
@@ -25,7 +25,7 @@ body[data-current-view="shoot-view"] .app-shell{
   gap:6px;
 }
 
-/* Minimal wedding identity: monogram in place of repeated names. */
+/* Minimal event identity: monogram in place of repeated names. */
 #shoot-view .camera-topline{
   position:relative;
   min-height:52px;
@@ -44,7 +44,7 @@ body[data-current-view="shoot-view"] .app-shell{
   width:112px;
   height:48px;
   transform:translate(-50%,-50%);
-  background:url('/icons/crown-vow-crest.svg') center/contain no-repeat;
+  background:url('/icons/last-knight-out-crest.svg') center/contain no-repeat;
   opacity:.94;
   filter:drop-shadow(0 1px 7px rgba(218,172,75,.18));
   pointer-events:none;

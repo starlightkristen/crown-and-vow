@@ -1,10 +1,10 @@
 const CAMERAS = [
-  { id: 'canon-ae1', name: 'Canon AE-1', note: 'Chrome & black 35mm SLR', personality: 'The timeless classic.', era: '1970s', icon: '/icons/canon-ae1.svg', theme: '#171513' },
-  { id: 'olympus-trip-35', name: 'Olympus Trip 35', note: 'Compact chrome travel camera', personality: 'Small, bright, effortless.', era: '1960s', icon: '/icons/olympus-trip-35.svg', theme: '#292623' },
-  { id: 'polaroid-sx70', name: 'Polaroid SX-70', note: 'Folding instant camera', personality: 'The design icon.', era: '1970s', icon: '/icons/polaroid-sx70.svg', theme: '#1b1714' },
-  { id: 'kodak-instamatic-104', name: 'Kodak Instamatic 104', note: 'Boxy snapshot camera', personality: 'Made for candid moments.', era: '1960s', icon: '/icons/kodak-instamatic-104.svg', theme: '#1d1c1a' },
-  { id: 'nikon-f3', name: 'Nikon F3', note: 'Professional black 35mm SLR', personality: 'Quietly serious.', era: '1980s', icon: '/icons/nikon-f3.svg', theme: '#11110f' },
-  { id: 'pentax-k1000', name: 'Pentax K1000', note: 'Mechanical chrome 35mm SLR', personality: 'Simple, tactile, enduring.', era: '1970s', icon: '/icons/pentax-k1000.svg', theme: '#1b1917' },
+  { id: 'canon-ae1', name: 'The Minstrel', note: '35mm Film Camera', personality: 'Warm tones & timeless charm.', era: '1970s', icon: '/icons/canon-ae1.svg', sigil: '/icons/sigils/minstrel.svg', theme: '#171513' },
+  { id: 'olympus-trip-35', name: 'The Wanderer', note: 'Wide 35mm', personality: 'Capture more of the adventure.', era: '1960s', icon: '/icons/olympus-trip-35.svg', sigil: '/icons/sigils/wanderer.svg', theme: '#292623' },
+  { id: 'polaroid-sx70', name: 'The Alchemist', note: 'Instant Film', personality: 'Magic you can hold in your hand.', era: '1970s', icon: '/icons/polaroid-sx70.svg', sigil: '/icons/sigils/alchemist.svg', theme: '#1b1714' },
+  { id: 'kodak-instamatic-104', name: 'The Jester', note: 'Candid 35mm', personality: 'Never met a moment it didn’t liven up.', era: '1960s', icon: '/icons/kodak-instamatic-104.svg', sigil: '/icons/sigils/jester.svg', theme: '#1d1c1a' },
+  { id: 'nikon-f3', name: 'The Archivist', note: 'Black & White', personality: 'Timeless, classic, and a little moody.', era: '1980s', icon: '/icons/nikon-f3.svg', sigil: '/icons/sigils/archivist.svg', theme: '#11110f' },
+  { id: 'pentax-k1000', name: 'The Courtier', note: 'Flash 35mm', personality: 'Bold look with a romantic flair.', era: '1970s', icon: '/icons/pentax-k1000.svg', sigil: '/icons/sigils/courtier.svg', theme: '#1b1917' },
 ];
 
 const views = {
@@ -142,6 +142,7 @@ function renderCameraChoices() {
       <div class="camera-card-art">
         <span class="camera-era">${escapeHtml(camera.era)}</span>
         <img src="${camera.icon}" alt="${escapeHtml(camera.name)} inspired vintage camera illustration">
+        <img class="camera-sigil" src="${camera.sigil}" alt="" aria-hidden="true">
       </div>
       <div class="camera-card-copy">
         <strong>${escapeHtml(camera.name)}</strong>

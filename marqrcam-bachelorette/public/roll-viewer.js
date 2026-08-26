@@ -181,7 +181,7 @@ if (rollList) {
         if (saveStatus) saveStatus.textContent = isAppleMobile()
           ? 'Choose “Save Images” in the Share sheet to add them to Photos.'
           : 'Choose where you want to save your photos.';
-        await navigator.share({ files, title: 'Crown & Vow — My Roll', text: 'Photos from Crown & Vow · Sept 18–21, 2026' });
+        await navigator.share({ files, title: 'Last Knight Out — My Roll', text: 'Photos from Last Knight Out · Sept 18–21, 2026' });
         if (saveStatus) saveStatus.textContent = `${files.length} photo${files.length === 1 ? '' : 's'} ready on your phone ✓`;
       } else {
         files.forEach((file, index) => setTimeout(() => downloadFile(file), index * 220));
@@ -252,7 +252,7 @@ if (rollList) {
     const version = item.editStatus === 'edited' && item.editRecipe ? 'developed' : 'original';
     const file = await exportFile(item, version);
     try {
-      if (navigator.share && navigator.canShare?.({ files: [file] })) await navigator.share({ files: [file], title: `A&M Frame ${String(frameNumber(item)).padStart(2, '0')}` });
+      if (navigator.share && navigator.canShare?.({ files: [file] })) await navigator.share({ files: [file], title: `Last Knight Out Frame ${String(frameNumber(item)).padStart(2, '0')}` });
       else downloadFile(file);
     } catch (error) {
       if (error?.name !== 'AbortError') alert(error?.message || 'Could not save this photo.');
@@ -260,7 +260,7 @@ if (rollList) {
   }
 
   async function removePhoto(item) {
-    if (!confirm('Remove this photo from your roll? This permanently deletes it from the Crown & Vow camera.')) return;
+    if (!confirm('Remove this photo from your roll? This permanently deletes it from the Last Knight Out camera.')) return;
     const button = lightbox?.querySelector('.photo-delete');
     if (button) { button.disabled = true; button.textContent = 'Removing…'; }
     try {

@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#0d0c0a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="A&M Camera" />
-  <meta name="description" content="A picture, if you please. Crown & Vow · Sept 18–21, 2026" />
+  <meta name="apple-mobile-web-app-title" content="Last Knight Out" />
+  <meta name="description" content="A picture, if you please. Last Knight Out · Sept 18–21, 2026" />
   <link id="manifest-link" rel="manifest" href="/manifest.webmanifest?camera=canon-ae1" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/camera-themes.css" />
@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="/guided-tour.css?v=1" />
   <link rel="stylesheet" href="/experience.css?v=1" />
   <link rel="stylesheet" href="/guest-simplified.css?v=2" />
-  <link rel="stylesheet" href="/crown-vow-theme.css?v=1" />
+  <link rel="stylesheet" href="/last-knight-out-theme.css?v=1" />
   <title>A picture, if you please.</title>
 </head>
 <body>
@@ -36,7 +36,7 @@
       <h2 id="display-dialog-title">Classic or Illuminated.</h2>
       <p>Both views have the same camera and features. Choose the presentation that feels best to you.</p>
       <div class="display-options">
-        <button class="display-choice" type="button" data-view-mode-choice="classic" aria-pressed="true"><strong>Classic</strong><span>The full candlelit wedding experience.</span></button>
+        <button class="display-choice" type="button" data-view-mode-choice="classic" aria-pressed="true"><strong>Classic</strong><span>The full candlelit court experience.</span></button>
         <button class="display-choice" type="button" data-view-mode-choice="illuminated" aria-pressed="false"><strong>Illuminated</strong><span>Larger type, stronger contrast and larger controls for easier viewing.</span></button>
       </div>
       <button id="display-close" class="display-close" type="button">Done</button>
@@ -45,8 +45,8 @@
 
   <section id="welcome-experience" class="welcome-experience" aria-labelledby="welcome-title">
     <div class="welcome-inner">
-      <div class="welcome-monogram" aria-hidden="true">A&amp;M</div>
-      <p class="welcome-kicker">CROWN &amp; VOW · SEPT 18–21, 2026</p>
+      <div class="welcome-monogram" aria-hidden="true">☾</div>
+      <p class="welcome-kicker">LAST KNIGHT OUT · SEPT 18–21, 2026</p>
       <h1 id="welcome-title" class="welcome-title">A picture,<em>if you please.</em></h1>
       <div class="welcome-rule" aria-hidden="true"></div>
       <p class="welcome-invitation">Pick up a camera. Leave us a memory.</p>
@@ -57,7 +57,7 @@
   </section>
 
   <main class="app-shell" id="app" tabindex="-1">
-    <header class="masthead"><p class="eyebrow">CROWN &amp; VOW · SEPT 18–21, 2026</p><h1>A picture,<br><em>if you please.</em></h1><p class="deck">Choose a vintage camera and help us remember the night.</p></header>
+    <header class="masthead"><p class="eyebrow">LAST KNIGHT OUT · SEPT 18–21, 2026</p><h1>A picture,<br><em>if you please.</em></h1><p class="deck">Choose a vintage camera and help us remember the night.</p></header>
 
     <section id="checkin-view" class="view" aria-labelledby="checkin-heading">
       <div class="section-heading"><p class="eyebrow">PICK UP YOUR CAMERA</p><h2 id="checkin-heading">Find your invitation.</h2><p>Start with your first name.</p></div>
@@ -67,7 +67,7 @@
 
     <section id="camera-choice-view" class="view" hidden aria-labelledby="camera-choice-heading"><div class="section-heading"><p class="eyebrow">YOUR CAMERA FOR THE NIGHT</p><h2 id="camera-choice-heading">Choose your camera.</h2><p id="selected-guest-copy"></p></div><div id="camera-grid" class="camera-grid"></div></section>
 
-    <section id="shoot-view" class="view shoot-view-themed" hidden aria-label="Your issued wedding camera">
+    <section id="shoot-view" class="view shoot-view-themed" hidden aria-label="Your issued Last Knight Out camera">
       <div class="camera-topline"><div><span id="camera-owner"></span><strong id="camera-name"></strong></div><button id="change-person" class="text-button" type="button">Change person</button></div>
       <div id="event-banner" class="event-banner" role="status" hidden><p class="eyebrow">CAMERAS RESTING</p><p id="event-banner-message">The cameras are resting during the ceremony.</p></div>
       <div class="camera-body" id="camera-body">
@@ -82,7 +82,7 @@
     </section>
 
     <section id="roll-view" class="view" hidden aria-labelledby="roll-heading-title">
-      <div class="section-heading roll-heading"><button id="back-to-camera" class="text-button" type="button">← Camera</button><p class="eyebrow">YOUR ROLL</p><h2 id="roll-heading-title">Your pictures from the night.</h2><p>Open a photo to view, edit, or remove it. You can also save some—or all—of your pictures to your phone.</p><a class="gallery-link" href="/gallery.html">See the wedding gallery →</a></div>
+      <div class="section-heading roll-heading"><button id="back-to-camera" class="text-button" type="button">← Camera</button><p class="eyebrow">YOUR ROLL</p><h2 id="roll-heading-title">Your pictures from the night.</h2><p>Open a photo to view, edit, or remove it. You can also save some—or all—of your pictures to your phone.</p><a class="gallery-link" href="/gallery.html">See the Court Gallery →</a></div>
       <section id="roll-save-tools" class="roll-save-tools" aria-label="Save photos to your phone" hidden>
         <div class="roll-save-intro"><span>Want copies on your phone?</span><button id="roll-select-toggle" class="text-button" type="button">Select to save</button></div>
         <div id="roll-selection-tools" class="roll-selection-tools" hidden><div class="roll-selection-row"><button id="roll-select-all" class="text-button" type="button">Select all</button><span id="roll-selected-count" aria-live="polite">0 selected</span><button id="roll-clear-selection" class="text-button" type="button">Clear</button></div><fieldset class="roll-save-version"><legend>Save</legend><label><input type="radio" name="roll-save-version" value="developed" checked> Edited when available</label><label><input type="radio" name="roll-save-version" value="original"> Originals</label></fieldset><button id="roll-save-selected" class="primary" type="button" disabled>Save selected to phone</button><p id="roll-save-status" class="roll-save-status" role="status"></p></div>
