@@ -413,7 +413,7 @@ function manifestResponse(url) {
     display: "standalone",
     background_color: "#f2eadc",
     theme_color: camera.theme,
-    description: "A picture, if you please. Last Knight Out · Sept 18–21, 2026",
+    description: "Strike a pose, good knight. Last Knight Out · Sept 18–21, 2026",
     icons: [{ src: camera.icon, sizes: "any", type: "image/svg+xml", purpose: "any maskable" }],
   }), { headers: { "content-type": "application/manifest+json; charset=utf-8", "cache-control": "no-store" } });
 }

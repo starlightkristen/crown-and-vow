@@ -7,6 +7,7 @@ let guestKey = session?.guest?.id ? `marqrcam.tour.${TOUR_VERSION}.${session.gue
 let step = guestKey ? readStep() : 'intro';
 let observer = null;
 let statusObserver = null;
+let privacyObserver = null;
 
 start();
 
@@ -243,6 +244,19 @@ function showPrivacyStep() {
     secondary: null,
     onPrimary: showHomeStep,
   });
+  watchPrivacyChoice(panel);
+}
+
+function watchPrivacyChoice(panel) {
+  privacyObserver?.disconnect();
+  privacyObserver = new MutationObserver(() => {
+    if (step !== 'privacy') return privacyObserver.disconnect();
+    if (panel.querySelector('[data-gallery-permission].selected')) {
+      privacyObserver.disconnect();
+      showHomeStep();
+    }
+  });
+  privacyObserver.observe(panel, { attributes: true, attributeFilter: ['class'], subtree: true });
 }
 
 function showHomeStep() {
@@ -290,7 +304,10 @@ function handleMutation() {
   refreshSessionFromPage();
   if (!guestKey || step === 'complete') return;
   if (document.querySelector('.capture-review') && ['shutter', 'shooting', 'review'].includes(step)) showReviewStep();
-  else if (document.querySelector('.photo-lightbox') && step === 'features') showFeaturesStep();
+  else if (document.querySelector('.photo-lightbox') && ['photo', 'features'].includes(step)) {
+    if (step === 'photo') setStep('features');
+    showFeaturesStep();
+  }
   else if (document.querySelector('.photo-lightbox') && step === 'privacy') showPrivacyStep();
   else if (!document.querySelector('.coachmark') && document.querySelector('#shoot-view:not([hidden])')) resume();
 }
