@@ -47,7 +47,7 @@ body{
 .text-button{color:var(--gold)}
 
 .shutter{border-color:var(--gold);background:#2a3a26}
-.shutter span{background:var(--wine)}
+.shutter span{background:#1c1712}
 
 .error{background:#3a1f19;border-color:var(--wine);color:#f0d8cf}
 
