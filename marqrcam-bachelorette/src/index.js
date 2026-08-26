@@ -73,7 +73,7 @@ async function getEventState(env) {
 
 async function guestLookup(url, env) {
   const raw = (url.searchParams.get("lastName") || "").trim();
-  if (raw.length < 2 || raw.length > 80) return json({ error: "Enter at least two letters of your last name." }, 400);
+  if (raw.length < 2 || raw.length > 80) return json({ error: "Enter at least two letters of your name." }, 400);
   const result = await env.DB.prepare(`SELECT id, first_name AS firstName, last_name AS lastName, guest_type AS guestType FROM guests WHERE normalized_last_name=?1 AND active=1 ORDER BY first_name COLLATE NOCASE`).bind(normalizeName(raw)).all();
   return json({ guests: result.results || [] });
 }
