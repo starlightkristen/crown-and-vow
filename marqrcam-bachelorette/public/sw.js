@@ -1,4 +1,4 @@
-const CACHE = 'marqrcam-last-knight-out-shell-v3';
+const CACHE = 'marqrcam-last-knight-out-shell-v4';
 const SHELL = [
   '/',
   '/index.html',
@@ -12,7 +12,7 @@ const SHELL = [
   '/roll-viewer.css',
   '/features.css',
   '/darkroom.css',
-  '/guided-tour.css',
+  '/gallery-privacy.css',
   '/app.js',
   '/experience.js',
   '/lookup-flow.js',
@@ -23,7 +23,6 @@ const SHELL = [
   '/gallery-privacy.js',
   '/darkroom.js',
   '/install-flow.js',
-  '/guided-tour.js',
   '/gallery.html',
   '/gallery.css',
   '/gallery.js',

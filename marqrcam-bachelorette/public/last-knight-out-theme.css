@@ -162,7 +162,3 @@ body{
 .begin-experience,.lookup-row button,.primary{
   box-shadow:0 0 26px rgba(216,174,92,.28);
 }
-
-.tour-spotlight{
-  box-shadow:0 0 0 4px var(--gold-bright),0 0 26px 4px var(--moon-glow),0 0 0 9999px rgba(4,3,2,.6) !important;
-}
