@@ -113,14 +113,14 @@ function bindEvents() {
 function renderGuests(guests) {
   guestResults.innerHTML = '';
   if (!guests?.length) {
-    guestResults.innerHTML = '<p class="empty">No invited guests found under that last name. Check the spelling or try the surname on the invitation.</p>';
+    guestResults.innerHTML = '<p class="empty">No invited guests found under that name. Check the spelling.</p>';
     return;
   }
   for (const guest of guests) {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'guest-result';
-    button.textContent = `${guest.firstName} ${guest.lastName}`;
+    button.textContent = guest.firstName;
     button.addEventListener('click', () => {
       selectedGuest = guest;
       selectedGuestCopy.textContent = `Hello, ${guest.firstName}. Pick the camera you want to carry tonight.`;
@@ -194,7 +194,7 @@ function applyCameraTheme(cameraId) {
 function enterCamera() {
   const camera = cameraFor(session.camera.id);
   applyCameraTheme(camera.id);
-  document.querySelector('#camera-owner').textContent = `Issued to ${session.guest.firstName} ${session.guest.lastName}`;
+  document.querySelector('#camera-owner').textContent = `Issued to ${session.guest.firstName}`;
   document.querySelector('#camera-name').textContent = session.camera.name;
   document.querySelector('#camera-brand').textContent = session.camera.name.toUpperCase();
   updateExposureCounter();
