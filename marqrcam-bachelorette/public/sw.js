@@ -1,4 +1,4 @@
-const CACHE = 'marqrcam-last-knight-out-shell-v2';
+const CACHE = 'marqrcam-last-knight-out-shell-v3';
 const SHELL = [
   '/',
   '/index.html',
@@ -40,6 +40,8 @@ const SHELL = [
   '/icons/sigils/jester.svg',
   '/icons/sigils/archivist.svg',
   '/icons/sigils/courtier.svg',
+  '/icons/moon-flourish.svg',
+  '/icons/shutter-medallion.svg',
 ];
 
 self.addEventListener('install', (event) => {

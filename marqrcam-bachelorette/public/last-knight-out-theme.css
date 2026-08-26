@@ -83,21 +83,80 @@ body{
 
 .text-button{color:var(--gold-bright)}
 
-.shutter{border-color:var(--gold);background:radial-gradient(circle at 35% 30%,#2a2620,#171310)}
-.shutter span{background:#100d0a;box-shadow:inset 0 0 0 1px rgba(216,174,92,.35)}
+.shutter{
+  border:none;
+  background:url('/icons/shutter-medallion.svg') center/contain no-repeat;
+  box-shadow:0 0 22px rgba(216,174,92,.4);
+}
+.shutter span{background:transparent}
+.shutter:active{transform:scale(.94)}
 
 .error{background:#341522;border-color:var(--wine);color:#f6d9e2}
+
+/* Ornate viewfinder frame + gold camera-name label, echoing the "Last Knight Out" mockup */
+.viewfinder{
+  border:none !important;
+  box-shadow:
+    0 0 0 2px var(--gold),
+    0 0 0 6px #0a0908,
+    0 0 0 8px rgba(216,174,92,.55),
+    0 24px 60px rgba(0,0,0,.55) !important;
+}
+.camera-topline strong{
+  font-family:'Cinzel','Arial',sans-serif;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-size:13px;
+  color:var(--gold-bright);
+}
+.viewfinder-hud .frame-counter{
+  background:rgba(10,9,8,.75);
+  border:1px solid rgba(216,174,92,.5);
+  color:var(--gold-bright);
+  letter-spacing:.16em;
+}
 
 .deck,.section-heading p,.hint,.camera-topline span,.status-strip span,.latest-photo p,.roll-item p{
   color:var(--muted);
 }
 
 /* Celestial flourishes */
-.welcome-monogram{
-  font-size:34px !important;
-  color:var(--gold-bright) !important;
-  box-shadow:0 0 0 1px rgba(216,174,92,.5), 0 0 34px var(--moon-glow) !important;
-  background:radial-gradient(circle,rgba(216,174,92,.08),transparent 70%);
+.welcome-ornament{
+  display:block;
+  width:min(280px,72vw);
+  margin:0 auto 6px;
+  filter:drop-shadow(0 0 22px var(--moon-glow));
+}
+
+.welcome-wordmark,.masthead-wordmark{
+  background:linear-gradient(180deg,#f5d47d 0%,#d8ae5c 55%,#8a5b17 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  letter-spacing:.02em;
+  filter:drop-shadow(0 2px 18px rgba(216,174,92,.35));
+}
+.masthead h1.masthead-wordmark{font-size:clamp(40px,9vw,64px)}
+
+.welcome-experience .welcome-kicker{
+  color:#8fb3a3;
+  font-family:'Cinzel','Arial',sans-serif;
+}
+
+.welcome-tagline{
+  font-family:'Cormorant Garamond', Georgia, serif;
+  font-style:italic;
+  font-size:clamp(20px,5vw,26px);
+  color:var(--ink);
+  margin:0 0 8px;
+}
+.welcome-tagline em{color:var(--gold-bright);font-style:italic}
+
+.welcome-rule{position:relative}
+.welcome-rule span{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:#0a0908;padding:0 12px;
+  color:var(--gold-bright);font-size:15px;
 }
 
 .begin-experience,.lookup-row button,.primary{
