@@ -9,14 +9,12 @@ const CAMERAS = [
 
 const views = {
   checkin: document.querySelector('#checkin-view'),
-  cameraChoice: document.querySelector('#camera-choice-view'),
   shoot: document.querySelector('#shoot-view'),
   roll: document.querySelector('#roll-view'),
 };
 const lookupForm = document.querySelector('#lookup-form');
 const guestResults = document.querySelector('#guest-results');
-const cameraGrid = document.querySelector('#camera-grid');
-const selectedGuestCopy = document.querySelector('#selected-guest-copy');
+const DEFAULT_CAMERA = CAMERAS[0];
 const photoInput = document.querySelector('#photo-input');
 const shutter = document.querySelector('#shutter');
 const latestPhoto = document.querySelector('#latest-photo');
@@ -41,7 +39,6 @@ let eventState = { captureEnabled: true, galleryEnabled: true, message: '' };
 init();
 
 async function init() {
-  renderCameraChoices();
   bindEvents();
   registerServiceWorker();
   await refreshEventState();
@@ -123,40 +120,15 @@ function renderGuests(guests) {
     button.textContent = guest.firstName;
     button.addEventListener('click', () => {
       selectedGuest = guest;
-      selectedGuestCopy.textContent = `Hello, ${guest.firstName}. Pick the camera you want to carry tonight.`;
-      showView('cameraChoice');
+      claimCamera(DEFAULT_CAMERA);
     });
     guestResults.append(button);
   }
 }
 
-function renderCameraChoices() {
-  cameraGrid.innerHTML = '';
-  for (const camera of CAMERAS) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'camera-card';
-    button.dataset.camera = camera.id;
-    button.setAttribute('aria-label', `Choose ${camera.name}`);
-    button.innerHTML = `
-      <div class="camera-card-art">
-        <span class="camera-era">${escapeHtml(camera.era)}</span>
-        <img src="${camera.icon}" alt="${escapeHtml(camera.name)} inspired vintage camera illustration">
-        <img class="camera-sigil" src="${camera.sigil}" alt="" aria-hidden="true">
-      </div>
-      <div class="camera-card-copy">
-        <strong>${escapeHtml(camera.name)}</strong>
-        <span>${escapeHtml(camera.note)}</span>
-        <span class="camera-personality">${escapeHtml(camera.personality)}</span>
-      </div>`;
-    button.addEventListener('click', () => claimCamera(camera));
-    cameraGrid.append(button);
-  }
-}
-
 async function claimCamera(camera) {
   if (!selectedGuest) return;
-  selectedGuestCopy.textContent = 'Issuing your camera…';
+  guestResults.innerHTML = '<p class="empty">Issuing your camera…</p>';
   try {
     const response = await fetch('/api/sessions', {
       method: 'POST',
@@ -172,7 +144,7 @@ async function claimCamera(camera) {
     applyCameraTheme(camera.id);
     enterCamera();
   } catch (error) {
-    selectedGuestCopy.textContent = error.message;
+    guestResults.innerHTML = `<p class="error">${escapeHtml(error.message)}</p>`;
   }
 }
 
