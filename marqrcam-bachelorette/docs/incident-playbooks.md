@@ -97,7 +97,7 @@ Use this document for high-priority issues during rehearsal/event operations.
 
 After recovery, validate:
 
-- New uploads are transitioning from waiting -> safe.
+- New uploads are transitioning from `WAITING` to `SAFE ✓` in the guest roll.
 - Admin overview/photo desk loads cleanly.
 - Gallery state matches operator intent.
 - Deleting a photo removes both metadata and objects.

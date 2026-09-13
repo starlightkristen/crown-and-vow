@@ -10,7 +10,7 @@ Use this checklist for final readiness signoff before the event window.
   - [ ] `CLOUDFLARE_API_TOKEN`
   - [ ] `CLOUDFLARE_ACCOUNT_ID`
   - [ ] `ADMIN_TOKEN`
-- [ ] `npm run check` passes from `/home/runner/work/crown-and-vow/crown-and-vow/marqrcam-bachelorette`.
+- [ ] `npm run check` passes from the `marqrcam-bachelorette` directory.
 
 ## B) Data readiness
 

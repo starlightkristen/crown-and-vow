@@ -21,7 +21,7 @@ This runbook covers startup, pre-event verification, live operations, pause/roll
 
 ## Startup checklist (T-60 to T-30)
 
-1. In `/home/runner/work/crown-and-vow/crown-and-vow/marqrcam-bachelorette`:
+1. From the `marqrcam-bachelorette` directory:
    - `npm install`
    - `npm run check`
 2. Verify D1 migrations are current:
