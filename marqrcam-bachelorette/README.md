@@ -45,7 +45,7 @@ cd marqrcam-bachelorette
 npm install
 ```
 
-1. Create the dedicated D1 database and R2 bucket for this event (or let `.github/workflows/bootstrap-deploy.yml` do it via `workflow_dispatch`):
+1. Create the dedicated D1 database and R2 bucket for this event (or let `/.github/workflows/bootstrap-deploy-marqrcam.yml` do it via `workflow_dispatch`):
    ```bash
    npx wrangler d1 create marqrcam-crown-vow-bach-2026-db
    # copy the returned database_id into wrangler.jsonc, replacing REPLACE_WITH_D1_DATABASE_ID
