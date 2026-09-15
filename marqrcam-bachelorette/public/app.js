@@ -35,6 +35,7 @@ let deferredInstallPrompt = null;
 let session = loadSession();
 let uploadLoopRunning = false;
 let eventState = { captureEnabled: true, galleryEnabled: true, message: '' };
+const claimCodeFromUrl = new URL(window.location.href).searchParams.get('claim')?.trim() || '';
 
 init();
 
@@ -42,6 +43,10 @@ async function init() {
   bindEvents();
   registerServiceWorker();
   await refreshEventState();
+  if (claimCodeFromUrl) {
+    const claimed = await claimFromQrLink(claimCodeFromUrl);
+    if (claimed) return;
+  }
   if (session?.token && session?.guest && session?.camera) {
     applyManifest(session.camera.id);
     applyCameraTheme(session.camera.id);
@@ -49,6 +54,33 @@ async function init() {
     processQueue();
   } else {
     showView('checkin');
+  }
+}
+
+async function claimFromQrLink(code) {
+  showView('checkin');
+  guestResults.innerHTML = '<p class="empty">Claiming your camera…</p>';
+  try {
+    const response = await fetch('/api/sessions/claim', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ code }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'That camera link is unavailable.');
+    session = { ...data, roll: 1, nextExposure: 1 };
+    localStorage.setItem('marqrcam.session', JSON.stringify(session));
+    sessionStorage.removeItem('marqrcam.installSnoozedThisVisit');
+    applyManifest(session.camera.id);
+    applyCameraTheme(session.camera.id);
+    window.history.replaceState({}, '', '/');
+    enterCamera();
+    processQueue();
+    return true;
+  } catch (error) {
+    guestResults.innerHTML = `<p class="error">${escapeHtml(error.message)}</p><p class="hint">Use the fallback QR to open check-in and we’ll issue a fresh camera.</p>`;
+    window.history.replaceState({}, '', '/');
+    return false;
   }
 }
 
