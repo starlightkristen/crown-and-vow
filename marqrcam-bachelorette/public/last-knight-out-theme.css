@@ -1,0 +1,164 @@
+/* LAST KNIGHT OUT — a Ren Faire bachelorette reskin, layered on top of the
+   base MarQrCam chrome. Loaded last on every page so these values win the
+   cascade without touching the underlying camera/darkroom/gallery logic or
+   the vintage camera art, which are event-agnostic and shared with the
+   wedding deployment's design. */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+:root{
+  --ink:#efe3c8;
+  --paper:#0a0908;
+  --paper2:#050504;
+  --panel:#141210;
+  --gold:#d8ae5c;
+  --gold-bright:#f3d488;
+  --wine:#6a2036;
+  --muted:#b3a58e;
+  --line:#8a6a30;
+  --safe:#7a8f6a;
+  --moon-glow:rgba(216,174,92,.22);
+}
+
+body{
+  font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size:1.08em;
+  background:
+    radial-gradient(1.5px 1.5px at 12% 18%, rgba(243,212,136,.9), transparent),
+    radial-gradient(1px 1px at 78% 12%, rgba(243,212,136,.75), transparent),
+    radial-gradient(1.5px 1.5px at 34% 62%, rgba(243,212,136,.7), transparent),
+    radial-gradient(1px 1px at 62% 78%, rgba(243,212,136,.6), transparent),
+    radial-gradient(1.5px 1.5px at 88% 55%, rgba(243,212,136,.8), transparent),
+    radial-gradient(1px 1px at 20% 85%, rgba(243,212,136,.55), transparent),
+    radial-gradient(1.5px 1.5px at 55% 30%, rgba(243,212,136,.5), transparent),
+    radial-gradient(ellipse at 50% -10%, rgba(216,174,92,.14) 0%, transparent 45%),
+    linear-gradient(180deg,#0a0908 0%,#050504 100%);
+  background-attachment:fixed;
+  color:var(--ink);
+}
+
+.masthead h1,.section-heading h2,.gallery-header h1,.admin-header h1,.welcome-title,
+.coachmark-title,.display-card h2{
+  font-family:'Cinzel Decorative', 'Cinzel', Georgia, serif;
+  font-weight:700;
+  letter-spacing:.01em;
+}
+.eyebrow{font-family:'Cinzel','Arial',sans-serif;letter-spacing:.32em;font-weight:600}
+
+.panel,.guest-result,.status-strip>div,.latest-photo,.roll-item,
+.lookup-row input,.secondary,
+.gallery-shell .panel,.admin-panel,.admin-photos,.admin-login{
+  background:var(--panel);
+  border-color:var(--line);
+  color:var(--ink);
+}
+
+/* Camera cards keep their light product-photo backdrop from camera-themes.css
+   (dark vintage camera art needs a bright card to read well) — just warm the border,
+   then give each camera its own jewel-tone accent, echoing the Ren Faire card deck. */
+.camera-card{border-color:var(--line)}
+.camera-card-art{position:relative}
+.camera-sigil{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:34px;
+  height:34px;
+  padding:7px;
+  border-radius:50%;
+  background:radial-gradient(circle,#1c1712,#0d0a08);
+  box-shadow:0 0 0 1px rgba(216,174,92,.55),0 4px 12px rgba(0,0,0,.35);
+}
+.camera-card[data-camera="canon-ae1"]{border-color:#3f7a54}
+.camera-card[data-camera="nikon-f3"]{border-color:#4a4640}
+.camera-card[data-camera="olympus-trip-35"]{border-color:#2c6e82}
+.camera-card[data-camera="polaroid-sx70"]{border-color:#6a3f82}
+.camera-card[data-camera="kodak-instamatic-104"]{border-color:#a1476f}
+.camera-card[data-camera="pentax-k1000"]{border-color:var(--wine)}
+
+.lookup-row button,.primary,.roll-num{
+  background:var(--gold);
+  color:#211705;
+  font-weight:700;
+}
+
+.text-button{color:var(--gold-bright)}
+
+.shutter{
+  border:none;
+  background:url('/icons/shutter-medallion.svg') center/contain no-repeat;
+  box-shadow:0 0 22px rgba(216,174,92,.4);
+}
+.shutter span{background:transparent}
+.shutter:active{transform:scale(.94)}
+
+.error{background:#341522;border-color:var(--wine);color:#f6d9e2}
+
+/* Ornate viewfinder frame + gold camera-name label, echoing the "Last Knight Out" mockup */
+.viewfinder{
+  border:none !important;
+  box-shadow:
+    0 0 0 2px var(--gold),
+    0 0 0 6px #0a0908,
+    0 0 0 8px rgba(216,174,92,.55),
+    0 24px 60px rgba(0,0,0,.55) !important;
+}
+.camera-topline strong{
+  font-family:'Cinzel','Arial',sans-serif;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-size:13px;
+  color:var(--gold-bright);
+}
+.viewfinder-hud .frame-counter{
+  background:rgba(10,9,8,.75);
+  border:1px solid rgba(216,174,92,.5);
+  color:var(--gold-bright);
+  letter-spacing:.16em;
+}
+
+.deck,.section-heading p,.hint,.camera-topline span,.status-strip span,.latest-photo p,.roll-item p{
+  color:var(--muted);
+}
+
+/* Celestial flourishes */
+.welcome-ornament{
+  display:block;
+  width:min(280px,72vw);
+  margin:0 auto 6px;
+  filter:drop-shadow(0 0 22px var(--moon-glow));
+}
+
+.welcome-wordmark,.masthead-wordmark{
+  background:linear-gradient(180deg,#f5d47d 0%,#d8ae5c 55%,#8a5b17 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  letter-spacing:.02em;
+  filter:drop-shadow(0 2px 18px rgba(216,174,92,.35));
+}
+.masthead h1.masthead-wordmark{font-size:clamp(40px,9vw,64px)}
+
+.welcome-experience .welcome-kicker{
+  color:#8fb3a3;
+  font-family:'Cinzel','Arial',sans-serif;
+}
+
+.welcome-tagline{
+  font-family:'Cormorant Garamond', Georgia, serif;
+  font-style:italic;
+  font-size:clamp(20px,5vw,26px);
+  color:var(--ink);
+  margin:0 0 8px;
+}
+.welcome-tagline em{color:var(--gold-bright);font-style:italic}
+
+.welcome-rule{position:relative}
+.welcome-rule span{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:#0a0908;padding:0 12px;
+  color:var(--gold-bright);font-size:15px;
+}
+
+.begin-experience,.lookup-row button,.primary{
+  box-shadow:0 0 26px rgba(216,174,92,.28);
+}

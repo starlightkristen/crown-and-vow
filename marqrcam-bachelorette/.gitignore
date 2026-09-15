@@ -1,0 +1,11 @@
+node_modules/
+.wrangler/
+.dev.vars
+.env
+.env.*
+seed-guests.sql
+export.csv
+export*.csv
+export.xlsx
+export*.xlsx
+.DS_Store

@@ -1,0 +1,189 @@
+/* Mobile-first immersive shooting camera. Decorative only; never rendered into captured photos. */
+
+/* Minimal persistent Display control: visually just Aa, with the current mode still available to assistive tech. */
+.display-toggle{
+  width:42px;
+  height:42px;
+  min-width:42px;
+  min-height:42px;
+  padding:0;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+}
+.display-toggle .display-aa{
+  margin:0;
+  font-size:17px;
+  line-height:1;
+}
+.display-toggle > span:not(.display-aa){
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+
+/* Prevent decorative layers or full-bleed camera math from creating phantom horizontal scroll. */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+.app-shell,.welcome-inner{box-sizing:border-box}
+
+@media (max-width: 760px){
+  /* The arrival screen fits the actual dynamic phone viewport, including browser chrome and safe areas. */
+  .welcome-experience{overscroll-behavior:none}
+  .welcome-inner{
+    min-height:100svh;
+    min-height:100dvh;
+    padding-top:max(56px,calc(env(safe-area-inset-top) + 48px));
+    padding-bottom:max(18px,env(safe-area-inset-bottom));
+  }
+
+  /* General mobile shell no longer reserves a giant blank strip just for the Aa control. */
+  .app-shell{
+    width:100%;
+    min-height:100svh;
+    min-height:100dvh;
+    padding-top:max(52px,calc(env(safe-area-inset-top) + 44px));
+    padding-bottom:max(18px,env(safe-area-inset-bottom));
+  }
+
+  /* Keep ordinary screens elegant but compact enough that small phones do not get a 5px nuisance scroll. */
+  .masthead{padding-top:0;padding-bottom:20px}
+  .masthead h1{font-size:clamp(38px,10.5vw,58px);line-height:.92;margin-bottom:12px}
+  .masthead .deck{margin-bottom:0}
+  .section-heading{margin-bottom:16px}
+
+  /* Shooting mode is the camera, not a webpage containing a camera. */
+  body[data-current-view="shoot-view"] .app-shell{
+    padding-top:max(48px,calc(env(safe-area-inset-top) + 42px));
+    padding-left:8px;
+    padding-right:8px;
+    padding-bottom:max(8px,env(safe-area-inset-bottom));
+  }
+  body[data-current-view="shoot-view"] .masthead{display:none}
+  #shoot-view:not([hidden]){
+    min-height:calc(100dvh - max(56px,calc(env(safe-area-inset-top) + 50px)) - env(safe-area-inset-bottom));
+    display:flex;
+    flex-direction:column;
+  }
+  #shoot-view{overflow:visible}
+  #shoot-view .camera-topline{
+    margin:0 2px 8px;
+    min-height:32px;
+  }
+  #shoot-view .camera-topline .text-button{min-height:36px;padding-top:4px;padding-bottom:4px}
+  #shoot-view .camera-body{
+    width:calc(100vw - 12px);
+    max-width:none;
+    margin-left:calc(50% - 50vw + 6px);
+    margin-right:calc(50% - 50vw + 6px);
+    padding-left:clamp(10px,3vw,18px);
+    padding-right:clamp(10px,3vw,18px);
+    padding-bottom:clamp(12px,2.8vw,20px);
+    box-shadow:0 20px 42px rgba(18,14,11,.34),inset 0 0 0 1px rgba(255,255,255,.07);
+  }
+  #shoot-view .camera-top-plate{margin-left:calc(-1 * clamp(10px,3vw,18px));margin-right:calc(-1 * clamp(10px,3vw,18px));padding-left:16px;padding-right:16px}
+  #shoot-view .camera-brand{margin:2px 0 8px;min-height:22px;font-size:clamp(13px,3.7vw,17px)}
+  #shoot-view .camera-front{width:100%}
+  #shoot-view .viewfinder{width:100%;max-width:none;margin:0;padding:clamp(6px,1.8vw,10px)}
+  #shoot-view .viewfinder-inner{width:100%;aspect-ratio:4/3}
+  #shoot-view .shutter{width:clamp(58px,16vw,76px);height:clamp(58px,16vw,76px);margin:clamp(8px,2vw,14px) auto 0}
+  #shoot-view .shutter span{width:68%;height:68%}
+
+  /* Operational state stays visible but behaves like a camera readout instead of a second panel. */
+  #shoot-view .status-strip{margin:7px 0 5px;gap:5px}
+  #shoot-view .status-strip>div{padding:5px 7px;min-height:39px}
+  #shoot-view .status-strip strong{font-size:17px;line-height:1}
+  #shoot-view .status-strip span{font-size:9px;line-height:1.1}
+  #shoot-view .actions{margin-top:5px}
+  #shoot-view .actions .secondary{min-height:42px;padding:8px 18px}
+  #shoot-view .guest-links{margin:9px 0 0}
+  #shoot-view .latest-photo{margin-top:6px;padding:7px}
+  #shoot-view .latest-photo img{width:48px;height:48px}
+
+  /* Canon AE-1: chrome SLR shoulders and central prism. */
+  .shoot-view-themed[data-camera="canon-ae1"] .camera-body{border-radius:20px 20px 16px 16px;background:linear-gradient(180deg,#151412 0 16%,#090908 16% 100%)}
+  .shoot-view-themed[data-camera="canon-ae1"] .camera-top-plate{height:54px}
+  .shoot-view-themed[data-camera="canon-ae1"] .camera-prism{width:118px;height:44px}
+  .shoot-view-themed[data-camera="canon-ae1"] .camera-front:before{content:"AE-1";position:absolute;left:10px;top:-34px;color:#d8d4cd;font:700 9px/1 Arial,sans-serif;letter-spacing:.14em}
+
+  /* Olympus Trip 35: compact rounded chrome compact-camera body. */
+  .shoot-view-themed[data-camera="olympus-trip-35"] .camera-body{border-radius:26px;background:linear-gradient(180deg,#c9c7c1 0 13%,#292623 13% 100%)}
+  .shoot-view-themed[data-camera="olympus-trip-35"] .camera-top-plate{height:40px;margin-bottom:8px}
+  .shoot-view-themed[data-camera="olympus-trip-35"] .camera-prism{height:20px;width:76px}
+  .shoot-view-themed[data-camera="olympus-trip-35"] .viewfinder{border-radius:16px}
+  .shoot-view-themed[data-camera="olympus-trip-35"] .shutter{margin-top:10px}
+
+  /* Polaroid SX-70: warm leather, folding-camera proportions, broad lower apron. */
+  .shoot-view-themed[data-camera="polaroid-sx70"] .camera-body{border-radius:13px;background:linear-gradient(180deg,#2c1f18 0 15%,#17110e 15% 72%,#6b432f 72% 100%);padding-bottom:24px}
+  .shoot-view-themed[data-camera="polaroid-sx70"] .camera-top-plate{height:34px;margin-bottom:7px}
+  .shoot-view-themed[data-camera="polaroid-sx70"] .camera-brand{letter-spacing:.11em}
+  .shoot-view-themed[data-camera="polaroid-sx70"] .viewfinder{border-radius:4px;border-color:#79543d}
+  .shoot-view-themed[data-camera="polaroid-sx70"] .shutter{width:60px;height:60px;margin-top:10px;border-width:4px}
+
+  /* Kodak Instamatic 104: flat rectangular body, silver cap, yellow Kodak mark. */
+  .shoot-view-themed[data-camera="kodak-instamatic-104"] .camera-body{
+    border-radius:12px 12px 9px 9px;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.035),transparent 24%),
+      repeating-linear-gradient(90deg,#181817 0 2px,#1e1d1b 2px 4px);
+    padding-bottom:14px;
+  }
+  .shoot-view-themed[data-camera="kodak-instamatic-104"] .camera-top-plate{height:32px;margin-bottom:8px;background:linear-gradient(180deg,#d8d6d0,#a8a6a0 55%,#76746f)}
+  .shoot-view-themed[data-camera="kodak-instamatic-104"] .camera-top-plate .camera-dial{height:11px;width:34px;border-radius:2px}
+  .shoot-view-themed[data-camera="kodak-instamatic-104"] .camera-prism{height:13px;width:92px;background:linear-gradient(180deg,#d7d5cf,#8d8b86);box-shadow:0 1px 2px rgba(0,0,0,.35)}
+  .shoot-view-themed[data-camera="kodak-instamatic-104"] .camera-brand{justify-content:flex-start;padding-left:clamp(42px,12vw,70px);font-size:clamp(12px,3.4vw,15px);letter-spacing:.12em}
+  .shoot-view-themed[data-camera="kodak-instamatic-104"] .camera-brand:before{width:18px;height:3px;background:#d4ad23;box-shadow:0 0 8px rgba(212,173,35,.35)}
+  .shoot-view-themed[data-camera="kodak-instamatic-104"] .camera-front{padding:0 clamp(3px,1.4vw,8px)}
+  .shoot-view-themed[data-camera="kodak-instamatic-104"] .viewfinder{border-radius:5px;padding:7px;border:1px solid #504d48;box-shadow:inset 0 0 0 2px #0b0b0a,0 3px 9px rgba(0,0,0,.38)}
+  .shoot-view-themed[data-camera="kodak-instamatic-104"] .viewfinder:before,.shoot-view-themed[data-camera="kodak-instamatic-104"] .viewfinder:after{width:9px;height:35%;opacity:.65}
+  .shoot-view-themed[data-camera="kodak-instamatic-104"] .shutter{width:58px;height:58px;margin-top:8px;border-width:4px}
+  .shoot-view-themed[data-camera="kodak-instamatic-104"] .shutter span{background:radial-gradient(circle at 38% 32%,#504c46,#171614 62%,#050505)}
+
+  /* Nikon F3: black professional SLR with red accent and angular prism. */
+  .shoot-view-themed[data-camera="nikon-f3"] .camera-body{border-radius:15px;background:linear-gradient(180deg,#20201e 0 12%,#070707 12% 100%)}
+  .shoot-view-themed[data-camera="nikon-f3"] .camera-top-plate{height:50px}
+  .shoot-view-themed[data-camera="nikon-f3"] .camera-prism{height:39px;width:118px;clip-path:polygon(12% 100%,28% 8%,72% 8%,88% 100%)}
+  .shoot-view-themed[data-camera="nikon-f3"] .camera-brand:after{content:"F3";font:italic 700 12px/1 Arial,sans-serif;color:#d3282d;margin-left:2px;letter-spacing:0}
+
+  /* Pentax K1000: classic silver prism SLR. */
+  .shoot-view-themed[data-camera="pentax-k1000"] .camera-body{border-radius:19px;background:linear-gradient(180deg,#191816 0 14%,#0c0b0a 14% 100%)}
+  .shoot-view-themed[data-camera="pentax-k1000"] .camera-top-plate{height:55px}
+  .shoot-view-themed[data-camera="pentax-k1000"] .camera-prism{height:45px;width:115px}
+  .shoot-view-themed[data-camera="pentax-k1000"] .camera-brand:after{content:"K1000";font:700 9px/1 Arial,sans-serif;color:#c9b88c;letter-spacing:.08em;margin-left:2px}
+}
+
+/* Short phones need vertical compression, not desktop mode. */
+@media (max-width:760px) and (max-height:740px){
+  .welcome-inner{justify-content:flex-start;padding-top:max(54px,calc(env(safe-area-inset-top) + 46px));gap:0}
+  .welcome-monogram{width:54px;height:54px;font-size:22px;margin-bottom:12px}
+  .welcome-kicker{margin-bottom:10px}
+  .welcome-title{font-size:clamp(42px,12vw,62px)}
+  .welcome-rule{margin:16px 0}
+  .welcome-invitation{font-size:19px;margin-bottom:4px}
+  .welcome-subcopy{font-size:13px;line-height:1.42;margin-bottom:14px}
+  .begin-experience{min-height:48px;padding:11px 22px}
+  .welcome-display-note{margin-top:10px;font-size:11px}
+
+  body[data-current-view="shoot-view"] .app-shell{padding-top:max(44px,calc(env(safe-area-inset-top) + 38px))}
+  #shoot-view .camera-topline{margin-bottom:5px}
+  #shoot-view .camera-body{padding-bottom:9px}
+  #shoot-view .camera-top-plate{max-height:44px}
+  #shoot-view .camera-brand{margin-bottom:5px}
+  #shoot-view .shutter{width:54px;height:54px;margin-top:6px}
+  #shoot-view .status-strip{margin:5px 0 3px}
+  #shoot-view .status-strip>div{min-height:34px;padding:3px 6px}
+  #shoot-view .actions{margin-top:3px}
+  #shoot-view .actions .secondary{min-height:38px;padding-top:6px;padding-bottom:6px}
+  #shoot-view .guest-links{margin-top:6px}
+}
+
+@media (max-width: 420px){
+  #shoot-view .camera-body{width:calc(100vw - 6px);margin-left:calc(50% - 50vw + 3px);margin-right:calc(50% - 50vw + 3px)}
+  #shoot-view .camera-topline{font-size:12px}
+  #shoot-view .viewfinder{padding:6px}
+}

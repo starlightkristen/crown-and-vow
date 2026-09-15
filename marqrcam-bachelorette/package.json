@@ -1,0 +1,22 @@
+{
+  "name": "marqrcam-crown-vow-bachelorette",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types",
+    "check:isolation": "node scripts/assert_isolated_resources.mjs",
+    "check:syntax": "node --check src/index.js && node --check public/app.js && node --check public/experience.js && node --check public/live-camera.js && node --check public/capture-review.js && node --check public/roll-viewer.js && node --check public/darkroom.js && node --check public/install-flow.js && node --check public/gallery.js && node --check public/admin.js && node --check public/sw.js && node --check scripts/load_test.mjs",
+    "check": "npm run check:isolation && npm run check:syntax && wrangler deploy --dry-run",
+    "db:migrate:local": "wrangler d1 migrations apply marqrcam-crown-vow-bach-2026-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply marqrcam-crown-vow-bach-2026-db --remote",
+    "load:test": "node scripts/load_test.mjs",
+    "load:test:read": "set LOAD_TEST_MODE=read&& node scripts/load_test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "wrangler": "^4.125.0"
+  }
+}

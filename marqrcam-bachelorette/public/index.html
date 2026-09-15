@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" data-view-mode="classic">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d0c0a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Last Knight Out" />
+  <meta name="description" content="Strike a pose, good knight. Last Knight Out · Sept 18–21, 2026" />
+  <link id="manifest-link" rel="manifest" href="/manifest.webmanifest?camera=canon-ae1" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/camera-themes.css" />
+  <link rel="stylesheet" href="/camera-mobile.css?v=1" />
+  <link rel="stylesheet" href="/live-camera.css?v=2" />
+  <link rel="stylesheet" href="/roll-viewer.css?v=4" />
+  <link rel="stylesheet" href="/features.css?v=2" />
+  <link rel="stylesheet" href="/darkroom.css?v=3" />
+  <link rel="stylesheet" href="/gallery-privacy.css?v=1" />
+  <link rel="stylesheet" href="/experience.css?v=1" />
+  <link rel="stylesheet" href="/guest-simplified.css?v=2" />
+  <link rel="stylesheet" href="/last-knight-out-theme.css?v=1" />
+  <title>Strike a pose, good knight.</title>
+</head>
+<body>
+  <a class="skip-link" href="#app">Skip to guest camera</a>
+  <div id="experience-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <button id="display-toggle" class="display-toggle" type="button" aria-haspopup="dialog" aria-controls="display-dialog">
+    <span class="display-aa" aria-hidden="true">Aa</span><span>Display · <span id="display-current-mode">Classic</span></span>
+  </button>
+
+  <div id="display-dialog" class="display-dialog" role="dialog" aria-modal="true" aria-labelledby="display-dialog-title" hidden>
+    <div class="display-card">
+      <p class="eyebrow">CHOOSE YOUR VIEW</p>
+      <h2 id="display-dialog-title">Classic or Illuminated.</h2>
+      <p>Both views have the same camera and features. Choose the presentation that feels best to you.</p>
+      <div class="display-options">
+        <button class="display-choice" type="button" data-view-mode-choice="classic" aria-pressed="true"><strong>Classic</strong><span>The full candlelit court experience.</span></button>
+        <button class="display-choice" type="button" data-view-mode-choice="illuminated" aria-pressed="false"><strong>Illuminated</strong><span>Larger type, stronger contrast and larger controls for easier viewing.</span></button>
+      </div>
+      <button id="display-close" class="display-close" type="button">Done</button>
+    </div>
+  </div>
+
+  <section id="welcome-experience" class="welcome-experience" aria-labelledby="welcome-title">
+    <div class="welcome-inner">
+      <img class="welcome-ornament" src="/icons/moon-flourish.svg" alt="" aria-hidden="true">
+      <h1 id="welcome-title" class="welcome-title welcome-wordmark">Last Knight Out</h1>
+      <p class="welcome-kicker">A Ren Faire Bachelorette</p>
+      <div class="welcome-rule" aria-hidden="true"><span>✦</span></div>
+      <p class="welcome-tagline">Strike a pose, <em>good knight.</em></p>
+      <p class="welcome-invitation">Pick up a camera. Leave us a memory.</p>
+      <p class="welcome-subcopy">Take photos all night. Keep the ones you love, and they’ll be saved automatically for Marlena's Court. Edit or save copies to your phone whenever you want.</p>
+      <button id="begin-experience" class="begin-experience" type="button">Pick up a camera</button>
+      <p class="welcome-display-note">Need a brighter, larger view? Use <strong>Display</strong> above and choose <strong>Illuminated</strong>.</p>
+    </div>
+  </section>
+
+  <main class="app-shell" id="app" tabindex="-1">
+    <header class="masthead"><p class="eyebrow">A REN FAIRE BACHELORETTE · SEPT 18–21, 2026</p><h1 class="masthead-wordmark">Last Knight Out</h1><p class="deck">Strike a pose, good knight — help us remember the night.</p></header>
+
+    <section id="checkin-view" class="view" aria-labelledby="checkin-heading">
+      <div class="section-heading"><p class="eyebrow">PICK UP YOUR CAMERA</p><h2 id="checkin-heading">Find your invitation.</h2><p>Start with your first name.</p></div>
+      <form id="lookup-form" class="panel"><label for="last-name">Enter your name</label><div class="lookup-row"><input id="last-name" name="lastName" autocomplete="given-name" maxlength="80" required /><button type="submit">Find me</button></div><p class="hint">Only invited names matching what you enter will appear.</p></form>
+      <div id="guest-results" class="results" aria-live="polite"></div>
+    </section>
+
+    <section id="shoot-view" class="view shoot-view-themed" hidden aria-label="Your issued Last Knight Out camera">
+      <div class="camera-topline"><div><span id="camera-owner"></span><strong id="camera-name"></strong></div><button id="change-person" class="text-button" type="button">Change person</button></div>
+      <div id="event-banner" class="event-banner" role="status" hidden><p class="eyebrow">CAMERAS RESTING</p><p id="event-banner-message">The cameras are resting during the ceremony.</p></div>
+      <div class="camera-body" id="camera-body">
+        <div class="camera-top-plate" aria-hidden="true"><span class="camera-dial"></span><span class="camera-prism"></span><span class="camera-dial"></span></div>
+        <div class="camera-brand" id="camera-brand"></div>
+        <div class="camera-front"><div class="viewfinder"><div class="viewfinder-inner"><video id="live-viewfinder" class="live-viewfinder" autoplay muted playsinline aria-label="Live rear camera viewfinder"></video><div id="viewfinder-gate" class="viewfinder-gate"><strong>Look through your camera.</strong><p id="viewfinder-status">Turn on the live viewfinder so the picture happens right here inside your camera.</p><button id="enable-viewfinder" class="enable-viewfinder" type="button">Turn on viewfinder</button><button id="native-camera-fallback" class="native-camera-fallback" type="button" hidden>Use phone camera instead</button></div><div class="viewfinder-hud" aria-hidden="true"><span id="exposure-counter" class="frame-counter">FRAME 01</span></div></div></div></div>
+        <button id="shutter" class="shutter" type="button" aria-label="Take photo"><span aria-hidden="true"></span></button><input id="photo-input" type="file" accept="image/*" capture="environment" hidden />
+      </div>
+      <div class="status-strip" aria-label="Photo storage status"><div><strong id="safe-count">0</strong><span>safe</span></div><div><strong id="waiting-count">0</strong><span>waiting</span></div><div><strong id="total-count">0</strong><span>taken</span></div></div>
+      <div id="latest-photo" class="latest-photo" hidden><img id="latest-preview" alt="Your latest exposure" /><div><strong>Exposure captured.</strong><p id="latest-status" role="status">Saving it now…</p></div></div>
+      <div class="actions"><button id="open-roll" class="secondary" type="button">My roll</button></div>
+    </section>
+
+    <section id="roll-view" class="view" hidden aria-labelledby="roll-heading-title">
+      <div class="section-heading roll-heading"><button id="back-to-camera" class="text-button" type="button">← Camera</button><p class="eyebrow">YOUR ROLL</p><h2 id="roll-heading-title">Your pictures from the night.</h2><p>Open a photo to view, edit, or remove it. You can also save some—or all—of your pictures to your phone.</p><a class="gallery-link" href="/gallery.html">See the Court Gallery →</a></div>
+      <section id="roll-save-tools" class="roll-save-tools" aria-label="Save photos to your phone" hidden>
+        <div class="roll-save-intro"><span>Want copies on your phone?</span><button id="roll-select-toggle" class="text-button" type="button">Select to save</button></div>
+        <div id="roll-selection-tools" class="roll-selection-tools" hidden><div class="roll-selection-row"><button id="roll-select-all" class="text-button" type="button">Select all</button><span id="roll-selected-count" aria-live="polite">0 selected</span><button id="roll-clear-selection" class="text-button" type="button">Clear</button></div><fieldset class="roll-save-version"><legend>Save</legend><label><input type="radio" name="roll-save-version" value="developed" checked> Edited when available</label><label><input type="radio" name="roll-save-version" value="original"> Originals</label></fieldset><button id="roll-save-selected" class="primary" type="button" disabled>Save selected to phone</button><p id="roll-save-status" class="roll-save-status" role="status"></p></div>
+      </section>
+      <div id="roll-list" class="roll-list"></div>
+      <div class="roll-extras" aria-label="Camera options">
+        <div id="install-card" class="install-card" hidden><div class="install-card-layout"><img id="install-camera-art" class="install-camera-art" src="/icons/canon-ae1.svg" alt="Your selected vintage camera" /><div><p class="eyebrow">YOUR CAMERA FOR THE NIGHT</p><h3>Keep your camera close.</h3><p>Take photos all night. Every photo you keep is automatically saved privately for Marlena's Court. Edit favorites or save copies to your phone anytime.</p><p class="install-purpose">Add to your Home Screen for easy access to this camera and your roll all night.</p><p id="ios-install-help" class="install-help" hidden>On iPhone: tap <strong>Share</strong>, choose <strong>Add to Home Screen</strong>, then open it from the new camera icon.</p></div></div><div class="install-actions"><button id="install-camera" class="primary" type="button">Add to Home Screen</button><button id="install-done" class="secondary" type="button" hidden>I added it</button><button id="install-later" class="text-button" type="button">Not now</button></div></div>
+        <section id="plus-one-card" class="plus-one-card" hidden><p class="eyebrow">BRINGING A GUEST?</p><h3>Add their name to the camera list.</h3><p id="plus-one-status">Checking your invitation…</p><form id="plus-one-form" class="plus-one-form"><label class="sr-only" for="plus-one-first">Guest first name</label><input id="plus-one-first" name="firstName" autocomplete="given-name" placeholder="First name" maxlength="80" required /><label class="sr-only" for="plus-one-last">Guest last name</label><input id="plus-one-last" name="lastName" autocomplete="family-name" placeholder="Last name" maxlength="80" required /><button type="submit">Add guest</button></form></section>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/experience.js?v=1"></script>
+  <script type="module" src="/live-camera.js?v=3"></script>
+  <script type="module" src="/capture-review.js?v=3"></script>
+  <script type="module" src="/app.js"></script>
+  <script type="module" src="/lookup-flow.js?v=1"></script>
+  <script src="/darkroom-renderer.js?v=1"></script>
+  <script type="module" src="/roll-viewer.js?v=4"></script>
+  <script type="module" src="/gallery-privacy.js?v=1"></script>
+  <script type="module" src="/darkroom.js?v=3"></script>
+  <script type="module" src="/install-flow.js?v=3"></script>
+</body>
+</html>
