@@ -1,0 +1,32 @@
+name: Validate MarQrCam
+
+on:
+  pull_request:
+    paths:
+      - "marqrcam-bachelorette/**"
+      - ".github/workflows/validate-marqrcam.yml"
+  push:
+    paths:
+      - "marqrcam-bachelorette/**"
+      - ".github/workflows/validate-marqrcam.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: marqrcam-bachelorette
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - name: Inject placeholder-safe D1 UUID for CI validation
+        run: |
+          sed -i 's/REPLACE_WITH_D1_DATABASE_ID/00000000-0000-0000-0000-000000000000/' wrangler.jsonc
+      - name: Validate isolation, syntax, and Worker build
+        run: npm run check

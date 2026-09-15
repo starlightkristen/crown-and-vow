@@ -27,16 +27,16 @@ Bindings: `DB` (D1), `PHOTOS` (private R2), `ASSETS` (static). The browser never
 
 ## Crown & Vow theming
 
-Guest-facing copy and the camera crest icon (`public/icons/crown-vow-crest.svg`) were reworked for this event:
+Guest-facing copy and the camera crest icon (`public/icons/last-knight-out-crest.svg`) were reworked for this event:
 
 - Recipient/curator language: "Marlena's Court" instead of "Addison & Marlena"
 - Gallery renamed "Court Gallery"
 - Dates: Sept 18–21, 2026 instead of 11.14.26
-- R2 object paths under `bachelorette/crown-vow-2026/...` instead of `weddings/addison-marlena-2026/...`
+- R2 object paths under `bachelorette/last-knight-out-2026/...` instead of `weddings/addison-marlena-2026/...`
 
 The six vintage camera shells (Canon AE-1, Olympus Trip 35, Polaroid SX-70, Kodak Instamatic 104, Nikon F3, Pentax K1000) — and their product-photo card backgrounds from `camera-themes.css` — are unchanged, since they were never wedding-specific and read best on a bright card.
 
-`public/crown-vow-theme.css` layers the Crown & Vow Renaissance Faire palette (forest green, gold, cream, oxblood — matching `../src/App.jsx`) and its IM Fell English / EB Garamond fonts on top of everything else: page background, buttons, panels, stat cards, and the masthead type. It's linked last on `index.html`, `gallery.html`, and `admin.html` so it wins the cascade without editing the base stylesheets, and it's precached in `sw.js` for offline use.
+`public/last-knight-out-theme.css` layers the Crown & Vow Renaissance Faire palette (forest green, gold, cream, oxblood — matching `../src/App.jsx`) and its IM Fell English / EB Garamond fonts on top of everything else: page background, buttons, panels, stat cards, and the masthead type. It's linked last on `index.html`, `gallery.html`, and `admin.html` so it wins the cascade without editing the base stylesheets, and it's precached in `sw.js` for offline use.
 
 ## First-time setup
 
@@ -45,7 +45,7 @@ cd marqrcam-bachelorette
 npm install
 ```
 
-1. Create the dedicated D1 database and R2 bucket for this event (or let `.github/workflows/bootstrap-deploy.yml` do it via `workflow_dispatch`):
+1. Create the dedicated D1 database and R2 bucket for this event (or let `/.github/workflows/bootstrap-deploy-marqrcam.yml` do it via `workflow_dispatch`):
    ```bash
    npx wrangler d1 create marqrcam-crown-vow-bach-2026-db
    # copy the returned database_id into wrangler.jsonc, replacing REPLACE_WITH_D1_DATABASE_ID
@@ -73,3 +73,9 @@ Same minimal-retention policy as the wedding system: only household grouping, in
 ## After the Bachelorette
 
 This is a test/rehearsal environment. Once you're done: tear down the `marqrcam-crown-vow-bach-2026-db` D1 database and `marqrcam-crown-vow-bach-2026-photos` R2 bucket, or leave them — they're fully isolated from the wedding namespace either way and cost nothing to leave idle.
+
+## Operational readiness docs
+
+- Event-day runbook: `docs/event-day-runbook.md`
+- Incident response playbooks: `docs/incident-playbooks.md`
+- Friday signoff checklist: `docs/go-no-go-checklist.md`
