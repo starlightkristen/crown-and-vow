@@ -27,6 +27,7 @@ export default {
       if (path === "/api/event-state" && request.method === "GET") return eventState(env);
       if (path === "/api/guests" && request.method === "GET") return guestLookup(url, env);
       if (path === "/api/sessions" && request.method === "POST") return createSession(request, env);
+      if (path === "/api/sessions/claim" && request.method === "POST") return createSessionFromClaimLink(request, env);
       if (path === "/api/plus-one" && request.method === "GET") return plusOneStatus(request, env);
       if (path === "/api/plus-one" && request.method === "POST") return registerPlusOne(request, env);
       if (path === "/api/photos" && request.method === "POST") return uploadPhoto(request, url, env);
@@ -46,6 +47,8 @@ export default {
       if (/^\/api\/admin\/photos\/[^/]+$/.test(path) && request.method === "DELETE") return adminDeletePhoto(request, url, env);
       if (path === "/api/admin/event" && request.method === "PATCH") return adminUpdateEvent(request, env);
       if (path === "/api/admin/export.csv" && request.method === "GET") return adminExportCsv(request, env);
+      if (path === "/api/admin/claim-links" && request.method === "POST") return adminGenerateClaimLinks(request, env);
+      if (path === "/api/admin/claim-links/reissue" && request.method === "POST") return adminReissueClaimLink(request, env);
       if (path.startsWith("/api/admin/download/") && request.method === "GET") return adminDownload(request, url, env);
 
       return env.ASSETS.fetch(request);
@@ -85,11 +88,38 @@ async function createSession(request, env) {
   if (typeof guestId !== "string" || !CAMERAS[cameraModel]) return json({ error: "Choose an invited guest and camera." }, 400);
   const guest = await env.DB.prepare(`SELECT g.id, g.first_name AS firstName, g.last_name AS lastName, g.household_id AS householdId FROM guests g WHERE g.id=?1 AND g.active=1 LIMIT 1`).bind(guestId).first();
   if (!guest) return json({ error: "Guest not found." }, 404);
-  const sessionId = crypto.randomUUID();
-  const token = randomToken();
-  const tokenHash = await sha256Hex(token);
-  await env.DB.prepare(`INSERT INTO guest_sessions (id,guest_id,session_token_hash,camera_model) VALUES (?1,?2,?3,?4)`).bind(sessionId, guestId, tokenHash, cameraModel).run();
+  const { sessionId, token } = await createGuestSession(env, guestId, cameraModel);
   return json({ sessionId, token, guest, camera: { id: cameraModel, ...CAMERAS[cameraModel] } }, 201);
+}
+
+async function createSessionFromClaimLink(request, env) {
+  const body = await request.json().catch(() => null);
+  const code = typeof body?.code === "string" ? body.code.trim() : "";
+  if (code.length < 20) return json({ error: "This camera link is not valid." }, 400);
+  const codeHash = await sha256Hex(code);
+  const row = await env.DB.prepare(`
+    SELECT l.id,l.guest_id AS guestId,l.camera_model AS cameraModel,l.max_uses AS maxUses,l.use_count AS useCount,l.expires_at AS expiresAt,l.revoked_at AS revokedAt,
+           g.first_name AS firstName,g.last_name AS lastName,g.household_id AS householdId
+      FROM guest_claim_links l
+      JOIN guests g ON g.id=l.guest_id
+     WHERE l.code_hash=?1 AND g.active=1
+     LIMIT 1`).bind(codeHash).first();
+  if (!row) return json({ error: "That camera link is no longer available. Use the fallback QR at check-in." }, 404);
+  if (row.revokedAt) return json({ error: "That camera link has been replaced. Ask for a fresh code at check-in." }, 409);
+  if (row.expiresAt && new Date(row.expiresAt).getTime() <= Date.now()) return json({ error: "That camera link expired. Use the fallback QR at check-in." }, 409);
+
+  const useResult = await env.DB.prepare(`
+    UPDATE guest_claim_links
+       SET use_count=use_count+1,last_used_at=CURRENT_TIMESTAMP
+     WHERE id=?1
+       AND revoked_at IS NULL
+       AND (expires_at IS NULL OR expires_at > CURRENT_TIMESTAMP)
+       AND use_count < max_uses`).bind(row.id).run();
+  if (!useResult.meta?.changes) return json({ error: "That camera link has already been used. Ask for a fresh code at check-in." }, 409);
+
+  const { sessionId, token } = await createGuestSession(env, row.guestId, row.cameraModel);
+  const guest = { id: row.guestId, firstName: row.firstName, lastName: row.lastName, householdId: row.householdId };
+  return json({ sessionId, token, guest, camera: { id: row.cameraModel, ...CAMERAS[row.cameraModel] } }, 201);
 }
 
 async function plusOneStatus(request, env) {
@@ -345,6 +375,37 @@ async function adminExportCsv(request, env) {
   return new Response(csv, { headers: { "content-type": "text/csv; charset=utf-8", "content-disposition": `attachment; filename="last-knight-out-photo-manifest.csv"`, "cache-control": "no-store" } });
 }
 
+async function adminGenerateClaimLinks(request, env) {
+  if (!(await adminAuthorized(request, env))) return json({ error: "Unauthorized." }, 401);
+  const body = await request.json().catch(() => null);
+  const maxUses = clampInt(body?.maxUses, 1, 5, 1);
+  const expiresAt = validIso(body?.expiresAt) || defaultClaimExpiry();
+  const guests = await env.DB.prepare(`
+    SELECT g.id,g.first_name AS firstName,g.last_name AS lastName,
+           COALESCE((SELECT s.camera_model FROM guest_sessions s WHERE s.guest_id=g.id ORDER BY s.last_seen_at DESC LIMIT 1), 'canon-ae1') AS cameraModel
+      FROM guests g
+     WHERE g.active=1
+     ORDER BY g.last_name COLLATE NOCASE,g.first_name COLLATE NOCASE
+     LIMIT 1200`).all();
+  const links = [];
+  for (const guest of guests.results || []) links.push(await getOrCreateClaimLinkForGuest(env, guest, { maxUses, expiresAt, forceNew: true }));
+  return json({ generated: links.length, fallbackUrl: "/", links });
+}
+
+async function adminReissueClaimLink(request, env) {
+  if (!(await adminAuthorized(request, env))) return json({ error: "Unauthorized." }, 401);
+  const body = await request.json().catch(() => null);
+  const guestId = body?.guestId;
+  const cameraModel = CAMERAS[body?.cameraModel] ? body.cameraModel : "canon-ae1";
+  const maxUses = clampInt(body?.maxUses, 1, 5, 1);
+  const expiresAt = validIso(body?.expiresAt) || defaultClaimExpiry();
+  if (typeof guestId !== "string") return json({ error: "Guest is required." }, 400);
+  const guest = await env.DB.prepare(`SELECT id,first_name AS firstName,last_name AS lastName FROM guests WHERE id=?1 AND active=1 LIMIT 1`).bind(guestId).first();
+  if (!guest) return json({ error: "Guest not found." }, 404);
+  const link = await getOrCreateClaimLinkForGuest(env, { ...guest, cameraModel }, { maxUses, expiresAt, forceNew: true });
+  return json({ reissued: true, link });
+}
+
 async function adminDownload(request, url, env) {
   if (!(await adminAuthorized(request, env))) return json({ error: "Unauthorized." }, 401);
   const photoId = decodeURIComponent(url.pathname.slice("/api/admin/download/".length));
@@ -384,6 +445,39 @@ async function r2Response(env, key, cacheControl, contentDisposition = null) {
   headers.set("cache-control", cacheControl);
   if (contentDisposition) headers.set("content-disposition", contentDisposition);
   return new Response(object.body, { headers });
+}
+
+async function createGuestSession(env, guestId, cameraModel) {
+  const sessionId = crypto.randomUUID();
+  const token = randomToken();
+  const tokenHash = await sha256Hex(token);
+  await env.DB.prepare(`INSERT INTO guest_sessions (id,guest_id,session_token_hash,camera_model) VALUES (?1,?2,?3,?4)`).bind(sessionId, guestId, tokenHash, cameraModel).run();
+  return { sessionId, token };
+}
+
+async function getOrCreateClaimLinkForGuest(env, guest, options = {}) {
+  const forceNew = Boolean(options.forceNew);
+  const cameraModel = CAMERAS[guest.cameraModel] ? guest.cameraModel : "canon-ae1";
+  const maxUses = clampInt(options.maxUses, 1, 5, 1);
+  const expiresAt = validIso(options.expiresAt) || defaultClaimExpiry();
+  if (forceNew) await env.DB.prepare(`UPDATE guest_claim_links SET revoked_at=CURRENT_TIMESTAMP WHERE guest_id=?1 AND revoked_at IS NULL`).bind(guest.id).run();
+  const code = randomToken();
+  const codeHash = await sha256Hex(code);
+  await env.DB.prepare(`INSERT INTO guest_claim_links (id,guest_id,code_hash,camera_model,max_uses,expires_at) VALUES (?1,?2,?3,?4,?5,?6)`).bind(crypto.randomUUID(), guest.id, codeHash, cameraModel, maxUses, expiresAt).run();
+  return {
+    guestId: guest.id,
+    firstName: guest.firstName,
+    lastName: guest.lastName,
+    cameraModel,
+    maxUses,
+    expiresAt,
+    claimCode: code,
+    claimPath: `/?claim=${encodeURIComponent(code)}`,
+  };
+}
+
+function defaultClaimExpiry() {
+  return new Date("2026-09-22T12:00:00.000Z").toISOString();
 }
 
 function parseEditRecipe(value) {

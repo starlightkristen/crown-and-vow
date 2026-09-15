@@ -20,6 +20,9 @@ Use this checklist for final readiness signoff before the event window.
 
 ## C) Core flow validation
 
+- [ ] Personal QR -> auto-claim -> camera opens without name lookup.
+- [ ] Universal fallback QR to `/` works from printout and phone screen.
+- [ ] Used/expired/replaced QR shows clear fallback instructions.
 - [ ] Guest lookup -> session issuance works.
 - [ ] Live camera path works on at least one iOS + one Android device.
 - [ ] Native camera fallback works on at least one iOS + one Android device.
@@ -34,6 +37,10 @@ Use this checklist for final readiness signoff before the event window.
 
 - [ ] Admin login/logout/reload persistence verified.
 - [ ] Dashboard metrics load correctly.
+- [ ] QR handout generation produces one link/card per active guest.
+- [ ] Printable QR sheet reviewed for legibility on paper.
+- [ ] Phone-share QR link list copied and tested.
+- [ ] Per-guest QR reissue verified (old code blocked, new code works).
 - [ ] Capture pause/resume verified from guest side.
 - [ ] Gallery visibility toggle verified.
 - [ ] Photo moderation states (approved/private/hidden) verified.
